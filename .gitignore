@@ -1,0 +1,11 @@
+.DS_Store
+
+node_modules/
+config.yml
+
+dist/assets/
+dist/config/
+dist/layout/
+dist/sections/
+dist/snippets/
+dist/templates/
