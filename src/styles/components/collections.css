@@ -1,0 +1,16 @@
+@media screen and (max-width: 1025px) {
+	.collection-filters {
+		position: fixed;
+		top: 0;
+		left: -101vw;
+		bottom: 0;
+		width: 90vw;
+		background: var(--white);
+		z-index: 1001;
+		transition: left .3s;
+	}
+
+	.collection-filters.open {
+		left: 0%;
+	}
+}

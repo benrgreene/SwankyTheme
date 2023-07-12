@@ -1,0 +1,94 @@
+{%- assign cart_settings = cart_settings | replace: "'", "’" -%}
+
+<div x-data="{ cart: $store.cartInfo }">
+  <div id="InlineCart"
+       class="fixed top-4 bottom-4 rounded-[1.25rem] max-h-screen max-w-[calc(100vw-32px)] w-[30rem] z-[101] transition-all duration-200 bg-white"
+       :class="cart.cartOpen ? 'right-4' : 'right-[-30rem]'" >
+    
+    <button class="fixed inset-0 w-screen h-screen bg-black transition-all z-[-1]"
+            :class="cart.cartOpen ? 'block opacity-60' : 'hidden opacity-0'"
+            aria-label="close inline cart"
+            onclick="Alpine.store('cartInfo').setCartOpen(false)"></button>
+    
+    <div class="rounded-[1.25rem] h-full flex flex-col bg-white overflow-hidden">
+      {%- render 'cart-header', settings: settings -%}
+      {%- render 'cart-items', settings: settings -%}
+      {%- render 'cart-atc', settings: settings -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+  {
+    "name": "Inline Cart",
+    "settings": [
+      {
+        "type": "header",
+        "content": "General"
+      },
+      {
+        "type": "text",
+        "id": "cart_title",
+        "label": "Cart Title",
+        "default": "My Cart"
+      },
+      {
+        "type": "header",
+        "content": "Threshold"
+      },
+      {
+        "type": "number",
+        "id": "threshold",
+        "label": "Threshold",
+        "default": 75
+      },
+      {
+        "type": "text",
+        "id": "threshold_text",
+        "label": "Threshold Text",
+        "default": "Spend another $$TOTAL to get free shipping"
+      },
+      {
+        "type": "text",
+        "id": "threshold_reached_text",
+        "label": "Threshold Reached Text",
+        "default": "You qualify for free shipping!"
+      },
+      {
+        "type": "header",
+        "content": "Cart Disclaimer"
+      },
+      {
+        "type": "text",
+        "id": "disclaimer_text",
+        "label": "Disclaimer Text",
+        "default": "*Shipping and taxes will be calculated at checkout."
+      },
+      {
+        "type": "header",
+        "content": "Empty Cart Settings"
+      },
+      {
+        "type": "text",
+        "id": "continue_shopping_text",
+        "label": "Continue Shopping Text"
+      },
+      {
+        "type": "url",
+        "id": "continue_shopping_url",
+        "label": "Continue Shopping URL"
+      },
+      {
+        "type": "select",
+        "id": "continue_shopping_type",
+        "label": "Continue Shopping Button Type",
+        "options": [
+          { "label": "Secondary", "value": "secondary" },
+          { "label": "Tertiary", "value": "tertiary" },
+          { "label": "Outline", "value": "outline" }
+        ],
+        "default": "secondary"
+      }
+    ]
+  }
+{% endschema %}

@@ -1,0 +1,9 @@
+development:
+  password:
+  theme_id:
+  store: my-store.myshopify.com
+  store_proxy: public-store-url.com
+  mode: development
+  directory: dist/
+  ignore_files:
+    - config/settings_data.json

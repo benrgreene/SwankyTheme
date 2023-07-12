@@ -1,0 +1,68 @@
+{%- capture alpine_badges -%}
+  {%- for block in section.blocks -%}
+    {
+      "tag": {{- block.settings.tag | json -}},
+      "color": {{- block.settings.color | json -}},
+      "textColor": {{- block.settings.text_color | json -}}
+    }
+    {%- unless forloop.last -%},{%- endunless -%}
+  {%- endfor -%}
+{%- endcapture -%}
+
+<script>
+  document.addEventListener('alpine:init', () => {
+    Alpine.store('badgeStore', {
+      badges: [{{ alpine_badges }}],
+      getBadge (productBadges) { 
+        return this.badges.find((badge) => {
+          return productBadges.includes(badge.tag);
+        });
+      }
+    });
+  });
+</script>
+
+
+{% schema %}
+  {
+    "name": "Product Badges",
+    "blocks": [
+      {
+        "type": "badge",
+        "name": "Product Badge",
+        "settings": [
+          {
+            "type": "text",
+            "id": "tag",
+            "label": "Product Tag"
+          },
+          {
+            "type": "select",
+            "id": "color",
+            "label": "Badge Color",
+            "default": "black",
+            "options": [
+              { "label": "Black", "value": "black" },
+              { "label": "Dark Grey", "value": "grey-9" },
+              { "label": "Grey", "value": "grey-6" },
+              { "label": "Primary", "value": "primary" },
+              { "label": "Secondary", "value": "secondary" }
+            ]
+          },
+          {
+            "type": "select",
+            "id": "text_color",
+            "label": "Badge  Text Color",
+            "default": "white",
+            "options": [
+              { "label": "Black", "value": "black" },
+              { "label": "Primary", "value": "primary" },
+              { "label": "Secondary", "value": "secondary" },
+              { "label": "White", "value": "white" }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

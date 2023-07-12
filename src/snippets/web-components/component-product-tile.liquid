@@ -1,0 +1,27 @@
+<template id="component-product-tile">
+  <article class="h-full max-w-[40rem]">
+    <a class="h-full group no-underline"
+       :href="url">
+      <figure class="relative flex flex-col h-full">
+        <picture class="relative block w-full h-0 pb-[100%] rounded-[1.25rem] overflow-hidden">
+          <img class="absolute top-0 left-0 right-0 h-full object-cover transform scale-100 group-hover:scale-105 transition duration-300"
+               :src="image.src ? image.src : window.resizeImage(image, '350x')"
+               :alt="image.alt ? image.alt : title" />
+        </picture>
+        <figcaption class="mt-4 grow flex flex-col justify-between">
+          <p class="absolute top-0 right-0 rounded-bl-[.875rem] rounded-tr-[1.1rem] px-6 py-2 text-small font-header"
+             x-data='{ badgeToShow: $store.badgeStore.getBadge(tags) || false }'
+             x-text="badgeToShow.tag"
+             :style="'background-color: var(--' + badgeToShow.color + '); color: var(--' + badgeToShow.textColor + ')'"
+             x-show="badgeToShow"></p>
+
+          <p x-text="title"
+             class="sub-regular text-secondary group-hover:text-secondary-active underline decoration-white group-hover:decoration-secondary transition-all"></p>
+
+          <p x-text="`$${(price / 100.0).toFixed(2)}`"
+             class="mt-2 sub-regular text-grey-8"></p>          
+        </figcaption>
+      </figure>
+    </a>
+  </article>
+</template>

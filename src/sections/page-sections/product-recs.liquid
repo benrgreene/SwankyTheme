@@ -1,0 +1,86 @@
+{%- assign products_to_use = section.settings.collection.products -%}
+{%- if product.metafields.custom.related_variants and product -%}
+  {%- assign products_to_use = product.metafields.custom.related_variants.value -%}
+{%- endif -%}
+
+<div class="ccontain">
+  <h2 class="mb-6 h3">
+    {{ section.settings.title }}
+  </h2>
+  <div class="grid grid-cols-2 lg:grid-cols-4 gap-6">
+    {%- for product in products_to_use limit: 4 -%}
+      <product-tile x-data='{% render "product-json", product: product %}'
+                    data-animate-tiles="{{- forloop.index0 -}}"
+                    class="transform scale-[0.7] opacity-0 transition-all duration-500"></product-tile>
+
+      {%- capture product_ids -%}
+        {{- product_ids -}}
+        {%- unless forloop.first -%},{%- endunless -%}
+        {{- product.id -}}
+      {%- endcapture -%}
+    {%- endfor -%}
+  </div>
+</div>
+
+<script type="text/javascript">
+  window.brg.recsToFetch = window.brg.recsToFetch || [];
+  window.brg.recsToFetch = [...window.brg.recsToFetch, {{ product_ids }}];
+</script>
+
+{%- render 'spacer',
+    _mobile_space: section.settings.bottom_margin_mobile,
+    _desktop_space: section.settings.bottom_margin_desktop -%}
+
+{% schema %}
+  {
+    "name": "Product Recommendations",
+    "tag": "section",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Section Spacing"
+      },
+      {
+        "id": "bottom_margin_mobile",
+        "label": "Bottom Margin - Mobile",
+        "type": "range",
+        "min": 0,
+        "max": 200,
+        "step": 2,
+        "default": 40
+      },
+      {
+        "id": "bottom_margin_desktop",
+        "label": "Bottom Margin - Desktop",
+        "type": "range",
+        "min": 0,
+        "max": 200,
+        "step": 2,
+        "default": 70
+      },
+      {
+        "type": "text",
+        "label": "Title",
+        "id": "title",
+        "default": "Products You May Like"
+      },
+      {
+        "type": "collection",
+        "id": "collection",
+        "label": "Collection"
+      }
+    ],
+    "templates": [
+      "page",
+      "index",
+      "collection",
+      "product",
+      "404"
+    ],
+    "presets": [
+      {
+        "name": "Product Recommendations"
+      }
+    ]
+  }
+{% endschema %}

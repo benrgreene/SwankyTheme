@@ -1,0 +1,71 @@
+<div class="ccontain-small">
+  <h1 class="mt-16 text-center">
+    {{ article.title }}
+  </h1>
+  <p class="mt-4 text-center text-large">
+    {{ article.published_at | date: "%a, %b %d, %Y" }}
+  </p>
+  <div class="mt-16 mb-8 article-content">
+    {{- article.content -}}
+  </div>
+</div>
+
+<div class="py-10 px-4 bg-grey-2">
+  <div class="mx-auto max-w-[50rem] grid grid-cols-2">
+    <div>
+      {%- if blog.previous_article -%}
+        <a href="{{ blog.previous_article.url }}"
+           class="block px-5">
+          {{ blog.previous_article.title }}
+        </a>
+      {%- endif -%}
+    </div>
+    <div>
+      {%- if blog.next_article -%}
+        <a href="{{ blog.next_article.url }}"
+           class="block px-5 text-right">
+          {{ blog.next_article.title }}
+        </a>
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+
+{%- render 'spacer',
+      _mobile_space: section.settings.bottom_margin_mobile,
+      _desktop_space: section.settings.bottom_margin_desktop -%}
+
+{% schema %}
+  {
+    "name": "Article",
+    "settings": [
+      {
+        "id": "bottom_margin_mobile",
+        "label": "Bottom Margin - Mobile",
+        "type": "range",
+        "min": 0,
+        "max": 200,
+        "step": 2,
+        "default": 40
+      },
+      {
+        "id": "bottom_margin_desktop",
+        "label": "Bottom Margin - Desktop",
+        "type": "range",
+        "min": 0,
+        "max": 200,
+        "step": 2,
+        "default": 70
+      }
+    ],
+    "templates": [
+      "article"
+    ],
+    "presets": [
+      {
+        "name": "Article"
+      }
+    ]
+  }
+{% endschema %}
+

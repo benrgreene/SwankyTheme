@@ -1,0 +1,23 @@
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+
+@import '/lib/resets.css';
+@import '/lib/typography.css';
+
+
+@import '/components/accordion.css';
+@import '/components/article.css';
+@import '/components/buttons.css';
+@import '/components/cart.css';
+@import '/components/collections.css';
+@import '/components/containers.css';
+@import '/components/dialog.css';
+@import '/components/dialogr.css';
+@import '/components/inputs.css';
+@import '/components/links.css';
+@import '/components/radio.css';
+@import '/components/range-sliders.css';
+@import '/components/scrollbars.css';
+@import '/components/selects.css';

@@ -1,0 +1,23 @@
+<div id="component-product-gallery"
+     class="w-full overflow-hidden">
+  <div class="flex overflow-hidden snap-mandatory pb-3 lg:pb-0 lg:grid lg:grid-cols-2 gap-x-6 gap-y-4">
+    <template x-for="(image, index) in $store.productInfo.variantImages">
+      <img :src="image.variant_image.replace('.jpg', '_850x.jpg').replace('.png', '_850x.png').replace('.webp', '_850x.webp')"
+           :alt="image.image_alt_text"
+           :class="index === 0 && 'col-span-2'"
+           class="rounded-[1.25rem] snap-center cursor-pointer"
+           dialogr-img="true" 
+           :gallery-image="`gallery-image-${index}`" />
+    </template>
+  </div>
+  <div class="lg:hidden pb-3 flex gap-x-4 scrollbar">
+    <template x-for="(image, index) in $store.productInfo.variantImages">
+      <button class="min-w-[4rem] h-[4rem]">
+        <img :src="image.variant_image.replace('.jpg', '_250x.jpg').replace('.png', '_250x.png').replace('.webp', '_250x.webp')"
+             :alt="image.image_alt_text"
+             class="rounded-[0.75rem] w-[4rem] h-[4rem] cursor-pointer" 
+             @click="window.goToGallery(index)" />
+      </button>
+    </template>
+  </div>
+</div>

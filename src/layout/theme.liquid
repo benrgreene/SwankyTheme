@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="{{ shop.locale }}">
+  <head>
+    {%- render 'theme-head' -%}
+    {%- render 'head-meta' -%}
+    {{ content_for_header }}
+  </head>
+  <body class="flex flex-col min-h-screen w-screen overflow-x-hidden {% unless settings.display_preview == 'yes' -%}hide-preview-bar{%- endunless -%}">
+    <a class="visually-hidden skip-link" href="#MainContent">
+      Skip to content
+    </a>
+
+    {%- render 'dto' -%}
+    {%- render 'components' -%}
+
+    {%- section 'site-header' -%}
+
+    <main id="MainContent"
+          role="main"
+          class="grow flex flex-col w-screen overflow-x-hidden">
+      {{ content_for_layout }}
+    </main>
+
+    {%- section 'site-footer' -%}
+    {%- section 'inline-cart' -%}
+    {%- section 'product-badges' -%}
+
+    {%- render 'site-icons' -%}
+    {%- render 'theme-colors' -%}
+    {%- render 'structured-data' -%}
+    {%- render 'alpine-setup' -%}
+    {%- render 'external-scripts' -%}
+    {%- render 'dev-scripts' -%}
+  </body>
+</html>

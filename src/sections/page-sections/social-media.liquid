@@ -1,0 +1,119 @@
+<div class="ccontain">
+  <div class="mb-10 px-4 flex justify-between">
+    <div>
+      <h2 class="h3">{{ section.settings.title }}</h2>
+      <a href="{{ section.settings.instagram_url }}"
+         class="text-secondary hover:text-secondary-active underline decoration-white hover:decoration-secondary transition-all">
+        {{ section.settings.content }}
+      </a>
+    </div>
+    <div class="flex items-center gap-x-6">
+      <buutton data-snap-previous
+               data-for-slider="{{ section.id }}"
+               aria-label="View Previous"
+               title="View Previous"
+               class="icon-button rounded-full w-10 h-10 flex items-center justify-center bg-grey-2 hover:bg-grey-3 transition-all">
+        <svg class="touch-none pointer-events-none" xmlns="http://www.w3.org/2000/svg" height="1.25rem" viewBox="0 0 448 512"><path d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.2 288 416 288c17.7 0 32-14.3 32-32s-14.3-32-32-32l-306.7 0L214.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z" fill="currentColor"/></svg>
+      </buutton>
+      <buutton data-snap-next
+               data-for-slider="{{ section.id }}"
+               aria-label="View Next"
+               title="View Next"
+               class="icon-button rounded-full w-10 h-10 flex items-center justify-center bg-grey-2 hover:bg-grey-3 transition-all">
+        <svg class="touch-none pointer-events-none" xmlns="http://www.w3.org/2000/svg" height="1.25rem" viewBox="0 0 448 512"><path d="M438.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L338.8 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l306.7 0L233.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z" fill="currentColor"/></svg>    
+      </buutton>
+    </div>
+  </div>
+  <div class="snap-mandatory flex scrollbar scrollbar--padded"
+       data-snap-slider
+       data-for-slider="{{ section.id }}"
+       data-on-slide="0">
+    {%- for block in section.blocks -%}
+      <div class="p-4 w-1/2 md:w-1/3 lg:w-1/4 shrink-0 snap-start"
+           data-snap-slide="{{ forloop.index0 }}">
+        {%- render 'image-container',
+              image: block.settings.image,
+              image_size: '500x500',
+              mobile_image: section.settings.mobile_image,
+              mobile_image_size: '500x500',
+              alt: block.settings.image.alt
+              classes: 'rounded-[1.25rem] overflow-hidden'
+              cropped: 'center'
+              ratio: 100,
+              mobile_ratio: 100 -%}
+      </div>
+    {%- endfor -%}
+  </div>
+</div>
+
+{%- render 'spacer',
+      _mobile_space: section.settings.bottom_margin_mobile,
+      _desktop_space: section.settings.bottom_margin_desktop -%}
+
+
+{% schema %}
+  {
+    "name": "Social Media",
+    "max_blocks": 8,
+    "settings": [
+      {
+        "id": "bottom_margin_mobile",
+        "label": "Bottom Margin - Mobile",
+        "type": "range",
+        "min": 0,
+        "max": 200,
+        "step": 2,
+        "default": 40
+      },
+      {
+        "id": "bottom_margin_desktop",
+        "label": "Bottom Margin - Desktop",
+        "type": "range",
+        "min": 0,
+        "max": 200,
+        "step": 2,
+        "default": 70
+      },
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Title"
+      },
+      {
+        "type": "textarea",
+        "id": "content",
+        "label": "Content"
+      },
+      {
+        "type": "url",
+        "id": "instagram_url",
+        "label": "Instagram URL"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "image",
+        "name": "Image",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image"
+          }
+        ]
+      }
+    ],
+    "templates": [
+      "page",
+      "index",
+      "collection",
+      "product",
+      "404"
+    ],
+    "presets": [
+      {
+        "name": "Social Medai"
+      }
+    ]
+  }
+{% endschema %}

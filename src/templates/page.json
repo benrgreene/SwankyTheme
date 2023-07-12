@@ -1,0 +1,11 @@
+{
+  "name": "Page Template",
+  "sections": {
+    "page-with-sidebar": {
+      "type": "page-with-sidebar"
+    }
+  },
+  "order": [
+    "page-with-sidebar"
+  ]
+}

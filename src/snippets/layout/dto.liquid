@@ -1,0 +1,15 @@
+<script type="text/javascript">
+  window.brg = {
+    domain: {{ shop.domain | json }},
+    template: {{ template | json }},
+    cart: {{- cart | json -}},
+    customer: {{- customer | json -}},
+  };
+
+  {%- if template.name == 'product' -%}
+    window.brg.product = {%- render 'product-json' -%};
+  {%- endif -%}
+  {%- if collection != blank -%}
+    window.brg.collection = {%- render 'collection-json' -%};
+  {%- endif -%}
+</script>

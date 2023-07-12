@@ -1,0 +1,11 @@
+{
+  "name": "Product Template",
+  "sections": {
+    "product-buybox": {
+      "type": "product-buybox"
+    }
+  },
+  "order": [
+    "product-buybox"
+  ]
+}

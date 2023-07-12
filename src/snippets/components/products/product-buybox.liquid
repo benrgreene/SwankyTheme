@@ -1,0 +1,64 @@
+<div id="component-product-buybox">
+  <div class="lg:sticky lg:top-[6rem]">
+    <h1 class="h2">
+      {{- product.title -}}
+    </h1>
+
+    {%- unless product.metafields.custom.product_reviews == blank -%}
+      <div class="mt-4">
+        {%- render 'product-review-avg' -%}
+      </div>
+    {%- endunless -%}
+
+    <template x-if="productInfo.selectedVariant.price">
+      <div class="mt-6 flex items-center"
+           x-data="{ price: `$${(productInfo.selectedVariant.price / 100.0).toFixed(2)}`, comparePrice: `$${(productInfo.selectedVariant.comparePrice / 100.0).toFixed(2)}`}">
+        <p x-text="price"
+           class="caps-large"
+           :class="productInfo.selectedVariant.comparePrice ? 'text-secondary' : 'text-black'"></p>
+        <p x-show="productInfo.selectedVariant.comparePrice"
+           x-text="comparePrice"
+           class="ml-2 text-grey-7 line-through capas-regular"></p>
+      </div>
+    </template>
+
+    <div class="my-6">
+      {{- product.description -}}
+    </div>
+
+    <template x-for="optionGroup in productInfo.product.options">
+      <div class="mb-6"
+           x-show="optionGroup.name !== 'Title'">
+        <p>
+          <span class="caps-large" 
+             x-text="optionGroup.name"></span>
+        </p>
+        <div class="mt-4  gap-x-3 gap-y-4"
+             :class="optionGroup.name === 'Color' ? 'flex items-center' : 'grid grid-cols-3'">
+          <template x-for="option in optionGroup.values">
+            <div>
+              <button x-show="optionGroup.name !== 'Color'"
+                      class="relative overflow-hidden border w-full rounded-[1.25rem] py-2 outline-offset-[3px]"
+                      @click="productInfo.setSelectedOptions(optionGroup.name, option)">
+                <span class="absolute top-0 left-0 block h-full w-full hover:bg-primary transition-all"
+                      :class="productInfo.selectedOptions[optionGroup.name] === option ? 'bg-primary opacity-70' : 'bg-white opacity-40'"></span>
+                <span x-text="option"
+                      class="relative touch-none pointer-events-none z-1"></span>
+              </button>
+
+              <button x-show="optionGroup.name === 'Color'"
+                      class="border-2 rounded-full w-12 h-12 bg-cover outline-offset-[3px] transition-all"
+                      :class="`swatch-${option.toLowerCase().replace(' ', '-')}`"
+                      @click="productInfo.setSelectedOptions(optionGroup.name, option)"></button>
+            </div>
+          </template>
+        </div>
+      </div>
+    </template>
+
+    <button class="w-full button button--atc"
+            :disabled="!productInfo.selectedVariant.available"
+            onclick="window.addProductToCart()"
+            x-text="productInfo.selectedVariant.available ? 'Add to cart' : (productInfo.selectedVariant.price ? 'Out of stock' : 'Product Unavailable')"></button>
+  </div>
+</div>

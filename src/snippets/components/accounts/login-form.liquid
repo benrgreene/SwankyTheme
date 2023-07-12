@@ -1,0 +1,50 @@
+{%- form 'customer_login',
+      novalidate: 'novalidate',
+      class: 'w-full flex flex-col items-center' -%}
+
+  {%- if recover_success == true -%}
+    <div class="mb-4 block text-small leading-5 mx-auto">
+      We've sent you an email with a link to update your password.
+    </div>
+  {%- endif -%}
+  {%- if form.errors -%}
+    <div class="mb-6 block text-error text-small">
+      {{ form.errors | default_errors }}
+    </div>
+  {%- endif -%}
+
+  <div class="mb-6 input-wrap w-full max-w-[20rem]">
+    <input type="email"
+           name="customer[email]"
+           class="w-full min-w-0"
+           id="CustomerEmail"
+           autocomplete="email"
+           autocorrect="off"
+           autocapitalize="off"
+           {% if form.errors contains 'form' %}
+             aria-invalid="true"
+           {% endif %}
+           required
+           data-error-message="this input is required"
+           placeholder=" " />
+    <label for="CustomerEmail">Email</label>
+  </div>
+
+  <div class="input-wrap mb-6 w-full max-w-[20rem]">
+    <input type="password"
+           value=""
+           name="customer[password]"
+           class="w-full min-w-0"
+           id="CustomerPassword"
+           autocomplete="current-password"
+           required
+           data-error-message="this input is required"
+           placeholder=" " />
+    <label for="CustomerPassword">
+      Password
+    </label>
+  </div>
+  <button class="w-full max-w-[20rem] button button--secondary button--short">
+    Log In
+  </button>
+{%- endform -%}

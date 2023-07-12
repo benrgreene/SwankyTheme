@@ -1,0 +1,47 @@
+<div class="px-4 flex-grow scrollbar"
+     :class="cart.updatingCart ? 'opacity-40 pointer-events-none touch-none' : ''">
+  <template x-for="(item, index) in cart.cart.items">
+    <div class="border-t border-grey-5 py-6 flex items-stretch gap-x-4"
+         :class="index > 0 ? '' : ''">
+      <img :src="item.image" 
+           :alt="item.product.title"
+           class="rounded-md object-cover" />
+      <div class="grow flex flex-col">
+        <div class="flex gap-x-4 items-start">
+          <h3 class="text-large" 
+              x-text="item.product.title"></h3>
+          <button class="mt-2 ml-auto text-black hover:text-secondary transition-all"
+                  @click="window.removeItemFromCart(item)"
+                  aria-label="remove item from cart">
+            <svg xmlns="http://www.w3.org/2000/svg" height="1rem" viewBox="0 0 448 512"><path d="M135.2 17.7L128 32H32C14.3 32 0 46.3 0 64S14.3 96 32 96H416c17.7 0 32-14.3 32-32s-14.3-32-32-32H320l-7.2-14.3C307.4 6.8 296.3 0 284.2 0H163.8c-12.1 0-23.2 6.8-28.6 17.7zM416 128H32L53.2 467c1.6 25.3 22.6 45 47.9 45H346.9c25.3 0 46.3-19.7 47.9-45L416 128z" fill="currentColor"/></svg>
+          </button>
+        </div>
+        <template x-for="option in item.options_with_values">
+          <p class="mt-0.5 text-small"
+             x-show="option.name !== 'Title'">
+            <span class="font-bold"
+                  x-text="option.name"></span>:
+            <span class="ml-1"
+                  x-text="option.value"></span>
+          </p>
+        </template>
+        <div class="mt-auto mb-1 flex justify-between items-center">
+          <div>
+            <span class="mr-1 text-small">Quantity:</span>
+            <span class="inline-block border border-grey-7 rounded-md text-[0]">
+              <button class="px-2 text-small"
+                      aria-label="reduce item quantity by one"
+                      @click="window.decreaseCartQuantity(item)">-</button>
+              <span class="border-x border-grey-7 px-2 text-small"
+                    x-text="item.quantity"></span>
+              <button class="px-2 text-small"
+                      aria-label="increase item quantity by one"
+                      @click="window.increaseCartQuantity(item)">+</button>
+            </span>
+          </div>
+          <p x-text="`$${(item.price * item.quantity / 100.0).toFixed(2)}`"></p>
+        </div>
+      </div>
+    </div>
+  </template>
+</div>

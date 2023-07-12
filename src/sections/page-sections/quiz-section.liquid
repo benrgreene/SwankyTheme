@@ -1,0 +1,82 @@
+{%- assign questions_indecies = 'one,two,three' | split: ',' -%}
+{%- for question_group in shop.metaobjects.quiz_questions.values -%}
+  {% assign questions = question_group %}
+{%- endfor -%}
+
+<section class="ccontain grid grid-cols-2">
+  <div>
+    {%- for n in (0..2) -%}
+      <div>
+        {%- assign question_key = 'question_' | append: questions_indecies[n] -%}
+        {%- assign answer_key = 'answer_' | append: questions_indecies[n] -%}
+        
+        {%- capture current_answers -%}
+          {%- for answer in shop.metaobjects.quiz_answer.values -%}
+            {{ answer[answer_key] }}
+            {% unless forloop.last %},{%- endunless -%}
+          {%- endfor -%}
+        {%- endcapture -%}
+        {%- assign current_answers = current_answers | split: ',' | uniq -%}
+
+        <p>{{ questions[question_key] }}</p>
+        <select>
+          <option>Select...</option>
+          {%- for answer in current_answers -%}
+            <option value="{{ answer }}">
+              {{ answer }}
+            </option>  
+          {%- endfor -%}
+        </select>
+      </div>
+    {%- endfor -%}
+  </div>
+</section>
+
+
+{% schema %}
+  {
+    "name": "Quiz",
+    "settings": [
+      {
+        "id": "bottom_margin_mobile",
+        "label": "Bottom Margin - Mobile",
+        "type": "range",
+        "min": 0,
+        "max": 200,
+        "step": 2,
+        "default": 40
+      },
+      {
+        "id": "bottom_margin_desktop",
+        "label": "Bottom Margin - Desktop",
+        "type": "range",
+        "min": 0,
+        "max": 200,
+        "step": 2,
+        "default": 70
+      },
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Title"
+      },
+      {
+        "type": "textarea",
+        "id": "content",
+        "label": "Content"
+      }
+    ],
+    "templates": [
+      "page",
+      "index",
+      "collection",
+      "product",
+      "404"
+    ],
+    "presets": [
+      {
+        "name": "Quiz"
+      }
+    ]
+  }
+{% endschema %}

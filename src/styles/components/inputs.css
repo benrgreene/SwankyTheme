@@ -1,0 +1,102 @@
+input::placeholder {
+  @apply text-grey-9;
+}
+
+input[type="submit"] {
+  @apply cursor-pointer;
+}
+
+input[type="text"],
+input[type="number"],
+input[type="email"],
+input[type="password"],
+input[type="date"],
+input[type="tel"] {
+  @apply rounded-md border border-black py-2 px-5 min-w-[10rem] bg-white cursor-pointer transition-all;
+}
+
+textarea {
+  @apply rounded-md border border-black py-2 px-5 bg-white cursor-pointer transition-all;
+}
+
+input.input--rouded[type] {
+  @apply rounded-[1.25rem];
+}
+
+textarea:placeholder-shown,
+input[type="text"]:placeholder-shown,
+input[type="number"]:placeholder-shown,
+input[type="email"]:placeholder-shown,
+input[type="date"]:placeholder-shown,
+input[type="tel"]:placeholder-shown {
+
+}
+
+input[type="text"]:active,
+input[type="number"]:active,
+input[type="email"]:active,
+input[type="password"]:active,
+input[type="tel"]:active,
+input[type="date"]:active,
+textarea:active,
+input[type="text"]:focus,
+input[type="number"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus,
+input[type="date"]:focus,
+input[type="tel"]:focus,
+textarea:focus {
+  outline-color: var(--ada-outline);
+  outline-offset: 3px;
+}
+
+input[type="text"].search-input {
+  @apply rounded-none border-t-0 border-x-0 py-1;
+}
+
+input.input-invalid,
+input.input-invalid:active,
+input.input-invalid:focus {
+  outline-color: var(--error);
+  @apply border-error;
+}
+.input-wrap__error {
+  @apply absolute w-full left-0 top-[calc(100%+0.875rem)] text-error text-[0.75rem] leading-[1.5rem];
+}
+
+.input-wrap {
+  @apply relative inline-block;
+}
+
+.input-wrap label {
+  @apply absolute top-0 left-0 transform -translate-y-full pl-0 pr-3 text-xs leading-6 cursor-pointer transition-all;
+}
+
+.input-wrap input:placeholder-shown + label {
+  @apply left-4 top-1/2 -translate-y-1/2 pl-0 pr-0 bg-transparent text-base;
+}
+
+.input-wrap input:focus:placeholder-shown + label,
+.input-wrap input:active:placeholder-shown + label {
+  @apply left-4 pl-2;
+}
+
+.input-wrap textarea:placeholder-shown + label {
+  @apply top-7 left-6 pl-0 pr-0 bg-transparent text-base;
+}
+
+.input-wrap--dark.input-wrap label {
+  @apply text-white;
+}
+
+.input-wrap--dark.input-wrap input:placeholder-shown + label {
+  @apply text-black;
+}
+
+textarea {
+  @apply border border-black py-4 px-6 w-full h-[10.5rem];
+}
+
+.input-error {
+  @apply mt-1 text-xsmall text-error;
+}

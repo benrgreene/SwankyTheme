@@ -1,0 +1,25 @@
+.select-wrap {
+  @apply relative inline-block;
+}
+
+.select-wrap::after {
+  content: url('data:image/svg+xml; utf8, <svg width="15" height="10" xmlns="http://www.w3.org/2000/svg"><path d="m6.947 9.195-6.54-6.54a.5.5 0 0 1 0-.708l1.06-1.06a.5.5 0 0 1 .707 0L6.947 5.66a.5.5 0 0 0 .638.058l.07-.058L12.426.887a.5.5 0 0 1 .638-.058l.07.057 1.06 1.061a.5.5 0 0 1 0 .707l-6.54 6.541a.5.5 0 0 1-.708 0Z" fill="202020" fill-rule="nonzero"/></svg>');
+  touch-action: none;
+  pointer-events: none;
+  transform: translateY(-50%);
+  @apply absolute top-1/2 right-4 w-4;
+}
+
+.select-wrap label {
+  @apply absolute top-0 left-0 transform -translate-y-full pl-0 pr-3 text-xs leading-6 transition-all;
+}
+
+select:active,
+select:focus {
+  outline-color: var(--ada-outline);
+  outline-offset: 3px;
+}
+
+select {
+  @apply rounded-md border border-black px-5 py-2 min-w-[10rem] appearance-none cursor-pointer bg-transparent;
+}

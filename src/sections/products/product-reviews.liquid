@@ -1,0 +1,43 @@
+<div class="ccontain" x-data="{ productInfo: $store.productInfo }">
+  <template x-if="productInfo.productReviews.bottomline">
+    <product-reviews x-data="{ productReviews: productInfo.productReviews, reviewPage: productInfo.reviewPage }"></product-reviews>
+  </template>
+</div>
+
+{%- render 'spacer',
+      _mobile_space: section.settings.bottom_margin_mobile,
+      _desktop_space: section.settings.bottom_margin_desktop -%}
+
+{% schema %}
+  {
+    "name": "Product Reviews",
+    "settings": [
+      {
+        "id": "bottom_margin_mobile",
+        "label": "Bottom Margin - Mobile",
+        "type": "range",
+        "min": 0,
+        "max": 200,
+        "step": 2,
+        "default": 40
+      },
+      {
+        "id": "bottom_margin_desktop",
+        "label": "Bottom Margin - Desktop",
+        "type": "range",
+        "min": 0,
+        "max": 200,
+        "step": 2,
+        "default": 70
+      }
+    ],
+    "templates": [
+      "product"
+    ],
+    "presets": [
+      {
+        "name": "Product Reviews"
+      }
+    ]
+  }
+{% endschema %}

@@ -1,0 +1,17 @@
+{%- assign review_score = product.metafields.custom.product_reviews -%}
+<p class="flex items-center">
+  {%- for index in (1..5) -%}
+    <span class="{% unless forloop.first %}ml-0.5{% endunless %}">
+      {%- assign last_index = index | minus: 1 -%}
+      {%- if review_score >= index -%}
+        {%- render 'icon-full-star' -%}
+      {%- elsif review_score > last_index -%}
+        {%- render 'icon-half-star' -%}
+      {%- else -%}
+        {%- render 'icon-empty-star' -%}
+      {%- endif -%}
+    </span>
+  {%- endfor -%}
+
+  <span class="ml-2">{{ review_score }} out of {{ product.metafields.custom.review_count }} reviews</span>
+</p>

@@ -1,0 +1,101 @@
+<div class="pt-10 ccontain"
+     x-data="{ fabricResults: $store.fabricStore }">
+  <div class="mb-10 mx-auto max-w-[750px] grid grid-cols-2 gap-x-4">
+    <button @click="fabricResults.setPane('search')"
+            class="button button--secondary">
+      View Search Results
+    </button>
+    <button @click="fabricResults.setPane('profile')"
+            class="button button--secondary">
+      View Saved Items
+    </button>
+  </div>
+  
+  <div class="mb-10 grid grid-cols-4 gap-y-16 gap-x-8"
+       x-show="fabricResults.pane === 'profile'">
+    <template x-for="result in fabricResults.savedFlannels">
+      <div>
+        <div class="relative h-0 w-full pb-[100%]">
+          <img :src="'https://joann.com' + result.data.image_url" 
+               class="absolute top-0 left-0 block w-full h-full object-cover" />
+        </div>
+        <a :href="'https://joann.com' + result.data.master_product_url"
+           target="_blank"
+           x-text="result.data.master_product_name"
+           class="mt-4 block h5 text-center"></a>
+        <div class="mt-4 text-center">
+          <button @click="window.toggleInSavedItems(result)"
+                  class="button button--primary"
+                  x-text="window.getButtonText(result)">
+          </button>
+        </div>
+      </div>
+    </template>
+  </div>
+
+
+  <div x-show="fabricResults.pane === 'search'">
+    <div class="grid grid-cols-4 gap-y-16 gap-x-8">
+      <template x-for="result in fabricResults.fabrics">
+        <div>
+          <div class="relative h-0 w-full pb-[100%]">
+            <img :src="'https://joann.com' + result.data.image_url" 
+                 class="absolute top-0 left-0 block w-full h-full object-cover" />
+          </div>
+          <a :href="'https://joann.com' + result.data.master_product_url"
+             target="_blank"
+             x-text="result.data.master_product_name"
+             class="mt-4 block h5 text-center"></a>
+          <div class="mt-4 text-center">
+            <button @click="window.toggleInSavedItems(result)"
+                    class="button button--primary"
+                    x-text="window.getButtonText(result)">
+            </button>
+          </div>
+        </div>
+      </template>
+    </div>
+    <div class="mt-10 text-center">
+      <button onclick="window.loadMoreFabrics()"
+              class="button button--secondary">
+        Load More Fabrics
+      </button>
+    </div>
+  </div>
+</div>
+
+<script src="{{ 'joanne-finder.js' | asset_url }}"></script>
+
+{% schema %}
+  {
+    "name": "Joanne Fabric Finder",
+    "settings": [
+      {
+        "id": "bottom_margin_mobile",
+        "label": "Bottom Margin - Mobile",
+        "type": "range",
+        "min": 0,
+        "max": 200,
+        "step": 2,
+        "default": 40
+      },
+      {
+        "id": "bottom_margin_desktop",
+        "label": "Bottom Margin - Desktop",
+        "type": "range",
+        "min": 0,
+        "max": 200,
+        "step": 2,
+        "default": 70
+      }
+    ],
+    "templates": [
+      "page"
+    ],
+    "presets": [
+      {
+        "name": "Joanne Fabric Finder"
+      }
+    ]
+  }
+{% endschema %}

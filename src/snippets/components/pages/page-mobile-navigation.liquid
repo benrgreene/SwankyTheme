@@ -1,0 +1,20 @@
+{%- comment -%}
+
+  Required:
+    _menu: the menu to display as the navigation
+
+{%- endcomment -%}
+
+{%- unless _menu.links == blank -%}
+  <div class="select-wrap lg:hidden">
+    <select page-menu
+            class="page-nav-select w-screen">
+      {%- for link in _menu.links -%}
+        <option value="{{- link.url -}}"
+              {%- if link.current == true %} selected="selected"{%- endif -%}>
+          {{- link.title -}}
+        </option>
+      {%- endfor -%}
+    </select>
+  </div>
+{%- endunless -%}

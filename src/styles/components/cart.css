@@ -1,0 +1,8 @@
+.right-cart {
+  @apply right-[-30rem];
+}
+
+
+.box-shadow-cart {
+  box-shadow: 0 -2px 10px var(--grey-7);
+}

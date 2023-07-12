@@ -1,0 +1,46 @@
+{%- render 'page-with-sidebar',
+      _page_content: page.content,
+      _page_menu: section.settings.page_menu -%}
+
+{%- render 'spacer',
+      _mobile_space: section.settings.bottom_margin_mobile,
+      _desktop_space: section.settings.bottom_margin_desktop -%}
+
+{% schema %}
+  {
+    "name": "Page Template Content",
+    "settings": [
+      {
+        "id": "bottom_margin_mobile",
+        "label": "Bottom Margin - Mobile",
+        "type": "range",
+        "min": 0,
+        "max": 200,
+        "step": 2,
+        "default": 40
+      },
+      {
+        "id": "bottom_margin_desktop",
+        "label": "Bottom Margin - Desktop",
+        "type": "range",
+        "min": 0,
+        "max": 200,
+        "step": 2,
+        "default": 70
+      },
+      {
+        "id": "page_menu",
+        "type": "link_list",
+        "label": "Menu"
+      }
+    ],
+    "templates": [
+      "page"
+    ],
+    "presets": [
+      {
+        "name": "Page Template Content"
+      }
+    ]
+  }
+{% endschema %}

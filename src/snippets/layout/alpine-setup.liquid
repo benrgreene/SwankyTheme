@@ -1,0 +1,83 @@
+<script type="text/javascript">
+  document.addEventListener('alpine:init', () => {
+    // setup cart store
+    Alpine.store('cartInfo', {
+      cart: {% render 'cart-json' %},
+      cartOpen: false,
+      updatingCart: false,
+      setCartInfo (newCart) { this.cart = newCart },
+      setCartOpen (isOpen) { this.cartOpen = isOpen },
+      setCartUpdating (isUpdating) { this.updatingCart = isUpdating }
+    });
+
+    // setup layout info
+    Alpine.store('layoutInfo', {
+      menuOpen: false,
+      searchOpen: false,
+      searchResults: {},
+      setSearchOpen (isOpen) { this.searchOpen = isOpen },
+      setMenuOpen (isOpen) { this.menuOpen = isOpen },
+      setSearchResults (newResults) { this.searchResults = newResults },
+    }); 
+
+    {%- if product != blank -%}
+      // setup product info if it exists
+      Alpine.store('productInfo', {
+        product: {% render 'product-json' %},
+        selectedOptions: {% render 'product-options-json' %},
+        selectedVariant: {% render 'variant-json', variant: product.selected_or_first_available_variant %},
+        productReviews: {},
+        reviewPage: 0,
+        setSelectedVariant (newVariant) {
+          this.selectedVariant = newVariant;
+        },
+        setSelectedOptions (optionName, optionValue) {
+          this.selectedOptions[optionName] = optionValue;
+          window.setVariantFromOptions(this.selectedOptions);
+        },
+        setImages (images) {
+          this.variantImages = images;
+        },
+        setProductReviews (newReviews) {
+          this.productReviews = newReviews;
+        },
+        setReviewPage (newPage) {
+          this.reviewPage = newPage;
+        }
+      });
+    {%- endif -%} 
+
+    {%- if template.name == 'collection' -%}
+      Alpine.store('collectionInfo', {
+        products: [],
+        filters: [],
+        activeFilters: [],
+        pageOn: 1,
+        productsCount: {{ collection.products_count }},
+        filtersOpen: false,
+        setFiltersOpen (isOpen) { this.filtersOpen = isOpen },
+        setProducts (newProducts) { this.products = newProducts },
+        addProducts (newProducts) { this.products.push(newProducts) },
+        setFilters (newFilters) { this.filters = newFilters },
+        setProductsCount (newProductsCount) { this.productsCount = newProductsCount },
+        toggleFilter (filterValue) {
+          this.pageOn = 1;
+          if (this.activeFilters.includes(filterValue)) {
+            this.activeFilters = this.activeFilters.filter((item) => item !== filterValue);
+          } else {
+            this.activeFilters.push(filterValue);
+          }
+
+          const { origin, pathname } = window.location;
+          history.replaceState({}, '', `${origin}${pathname}?${this.activeFilters.join('&')}`);
+          window.performProductFetch({
+            collectionID: window.brg.collection.handle,
+          })
+        },
+        setPageOn (newPage) {
+          this.pageOn = newPage;
+        }
+      });
+    {%- endif -%}
+  });
+</script>

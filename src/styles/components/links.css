@@ -1,0 +1,38 @@
+a {
+  @apply underline text-secondary hover:text-secondary-active transition-all;
+}
+
+.focus-link {
+  @apply relative text-large text-secondary hover:text-secondary-active no-underline;
+}
+
+.focus-link::after {
+  @apply content-[''] absolute left-0 -bottom-1 w-[1.25rem] h-0.5 bg-secondary transition-all;
+}
+
+.focus-link:hover::after {
+  @apply w-full bg-secondary-active;
+}
+
+.focus-link.focus-link--alt {
+  font-size: inherit;
+}
+
+.focus-link.focus-link--alt::after {
+  @apply w-0;
+}
+
+.focus-link.focus-link--alt:hover::after {
+  @apply w-full;
+}
+
+a.skip-link {
+  @apply fixed text-white transition-all;
+}
+
+.skip-link:focus,
+.skip-link:focus-visible {
+  @apply h-auto w-auto z-[1000];
+  clip-path: none;
+  clip: unset;
+}

@@ -1,0 +1,87 @@
+<div class="mb-6 py-4 flex justify-center align-center gap-x-6 bg-grey-2">
+  <a href="{{ blog.url }}"
+     class="no-underline text-black hover:text-secondary transition-all">
+    All Articles
+  </a>
+  {%- for block in section.blocks -%}
+    <a href="{{ blog.url }}/tagged/{{ block.settings.tag }}"
+       class="no-underline text-black hover:text-secondary transition-all">
+      {{ block.settings.tag }}
+    </a>
+  {%- endfor -%}
+</div>
+
+<div class="ccontain grid grid-cols-3 gap-x-6 gap-12">
+  {%- for article in blog.articles -%}
+    <article>
+      <a href="{{ article.url }}"
+         class="group text-center no-underline">
+        <div class="relative h-0 w-full pb-[60%] overflow-hidden">
+          <img src="{{ article.image | img_url: '500x300', crop: 'center' }}" 
+               alt="{{ article.title }}"
+               class="absolute inset-0 transform scale-1 group-hover:scale-[1.05] transition-all" />
+        </div>
+        <h2 class="pt-2 h4 text-black group-hover:text-secondary">
+          {{- article.title -}}
+        </h2>
+        <p class="text-black group-hover:text-secondary">
+          {{ article.created_at | date: "%b %d, %y" }}
+        </p>
+        <div>{{ article.excerpt }}</div>
+      </a>
+    </article>
+  {%- endfor -%}
+</div>
+
+{%- render 'spacer',
+      _mobile_space: section.settings.bottom_margin_mobile,
+      _desktop_space: section.settings.bottom_margin_desktop -%}
+
+{% schema %}
+  {
+    "name": "Article List",
+    "max_blocks": 2,
+    "settings": [
+      {
+        "id": "bottom_margin_mobile",
+        "label": "Bottom Margin - Mobile",
+        "type": "range",
+        "min": 0,
+        "max": 200,
+        "step": 2,
+        "default": 40
+      },
+      {
+        "id": "bottom_margin_desktop",
+        "label": "Bottom Margin - Desktop",
+        "type": "range",
+        "min": 0,
+        "max": 200,
+        "step": 2,
+        "default": 70
+      }
+    ],
+    "blocks": [
+      {
+        "type": "tag",
+        "name": "Tag",
+        "settings": [
+          {
+            "type": "text",
+            "id": "tag",
+            "label": "Tag"
+          }
+        ]
+      }
+    ],
+    "templates": [
+      "blog"
+    ],
+    "presets": [
+      {
+        "name": "Article List"
+      }
+    ]
+  }
+{% endschema %}
+

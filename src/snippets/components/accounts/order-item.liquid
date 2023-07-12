@@ -1,0 +1,16 @@
+<div class="py-4 px-6 grid grid-cols-7 {% if cell_type == 'even' -%}bg-grey-1{%- endif -%}">
+  <a href="{{- order.order_status_url -}}"
+     target="_blank"
+     class="col-span-2">
+    {{- order.name -}}
+  </a>
+  <span class="col-span-2">
+    {{ order.created_at | date: "%-m/%-d/%Y" }}
+  </span>
+  <span class="col-span-2">
+    {{- order.fulfillment_status_label -}}
+  </span>
+  <span>
+    {{- order.total_price | money -}}
+  </span>
+</div>

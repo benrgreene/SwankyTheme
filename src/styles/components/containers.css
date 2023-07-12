@@ -1,0 +1,7 @@
+.ccontain {
+  @apply mx-auto px-6 max-w-[85rem] w-full;
+}
+
+.ccontain-small {
+  @apply mx-auto px-6 max-w-[75rem];
+}

@@ -1,0 +1,132 @@
+<div class="mx-auto px-8 max-w-[45rem] w-full">
+  <h1 class="mb-10 text-center">
+    Contact Us
+  </h1>
+  <p class="mb-12">
+    {{- section.settings.contact_message -}}
+  </p>
+  {%- form 'contact' -%}
+    <div class="grid lg:grid-cols-2 gap-y-10 gap-x-8">
+      <div class="input-wrap">
+        <input type="text"
+               name="first_name"
+               id="first_name"
+               class="w-full">
+        <label for="first_name">
+          First Name
+        </label>
+      </div>
+
+      <div class="input-wrap">
+        <input type="text"
+               name="last_name"
+               id="last_name"
+               class="w-full">
+        <label for="last_name">
+          Last Name
+        </label>
+      </div>
+
+      <div class="input-wrap">
+        <input type="email"
+               name="user_email"
+               id="user_email"
+               class="w-full">
+        <label for="user_email">
+          Email
+        </label>
+      </div>
+
+      <div class="select-wrap">
+        <select name="inquiry_type"
+                id="inquiry_type"
+                class="w-full">
+          {%- for block in section.blocks -%}
+            <option value="{{- block.settings.value -}}">
+              {{- block.settings.title -}}
+            </option>
+          {%- endfor -%}
+        </select>
+        <label for="inquiry_type">
+          Subject
+        </label>
+      </div>
+
+      <div class="input-wrap lg:col-span-2">
+        <textarea name="message_body"
+                  id="message_body"></textarea>
+        <label for="message_body">
+          Message
+        </label>
+      </div>
+
+      <div class="lg:col-span-2 flex justify-center">
+        <button class="button button--secondary">
+          Send Message
+        </button>
+      </div>
+    </div>
+  {%- endform -%}
+</div>
+
+{%- render 'spacer',
+      _mobile_space: section.settings.bottom_margin_mobile,
+      _desktop_space: section.settings.bottom_margin_desktop -%}
+
+{% schema %}
+  {
+    "name": "Contact Form",
+    "settings": [
+      {
+        "id": "bottom_margin_mobile",
+        "label": "Bottom Margin - Mobile",
+        "type": "range",
+        "min": 0,
+        "max": 200,
+        "step": 2,
+        "default": 40
+      },
+      {
+        "id": "bottom_margin_desktop",
+        "label": "Bottom Margin - Desktop",
+        "type": "range",
+        "min": 0,
+        "max": 200,
+        "step": 2,
+        "default": 70
+      },
+      {
+        "id": "contact_message",
+        "type": "text",
+        "label": "Contact Message"
+      }
+    ],
+    "blocks": [
+      {
+        "name": "Subject",
+        "type": "subject",
+        "settings": [
+          {
+            "type": "text",
+            "label": "Title",
+            "id": "title",
+            "info": "what is displayed to the user"
+          },
+          {
+            "type": "text",
+            "label": "Value",
+            "id": "value"
+          }
+        ]
+      }
+    ],
+    "templates": [
+      "page"
+    ],
+    "presets": [
+      {
+        "name": "Contact Form"
+      }
+    ]
+  }
+{% endschema %}

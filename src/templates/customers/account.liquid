@@ -1,0 +1,78 @@
+<div class="ccontain">
+  <div class="mt-6 lg:mt-10 mb-10 flex justify-between items-center">
+    <h1 class="fancypants">Welcome {{ customer.name }}</h1>
+    <a href="/account/logout" class="button button--secondary button--short">Logout</a>
+  </div>
+
+  <div class="mb-10">
+    <div class="mb-6 flex items-center">
+      <h2 class="mr-20 h3">
+        Address
+      </h2>
+      <button data-edit-address 
+              class="focus-link">
+        Edit
+      </button>
+    </div>
+    <p>
+      {{- customer.default_address | format_address -}}
+    </p>
+  </div>
+
+  <dialog data-edit-address-modal
+          class="fixed inset-0 h-screen w-screen flex items-center justify-center bg-transparent z-[100]">
+    <button data-hide-address-form
+            aria-label="hide address form"
+            class="block absolute inset-0 w-full h-full bg-black opacity-50 z-[-1]"></button>
+    <div class="px-12 py-8 max-w-[40rem] bg-white">
+      {%- form 'customer_address', customer.default_address, class: 'grid grid-cols-2 gap-6' -%}
+        <h3 class="col-span-2 h4">Edit Address</h3>
+        <input type="text" name="address[first_name]" value="{{ form.first_name }}" placeholder="First Name">
+        <input type="text" name="address[last_name]" value="{{ form.last_name }}" placeholder="Last Name">
+        <input type="text" name="address[company]" value="{{ form.company }}" placeholder="Company">
+        <input type="text" name="address[address1]" value="{{ form.address1 }}" placeholder="Address Line 1">
+        <input type="text" name="address[address2]" value="{{ form.address2 }}" placeholder="Address Line 2">
+        <input type="text" name="address[city]" value="{{ form.city }}" placeholder="City">
+        
+        <div class="select-wrap">
+          <select id="AddressCountry_{{ form.id }}"
+                  class="w-full"
+                  name="address[country]" 
+                  data-country-selects
+                  data-form-id="{{ form.id }}"
+                  data-default="{{ form.country }}">{{ country_option_tags }}</select>
+        </div>
+        
+        <div id="AddressProvinceContainer_{{ form.id }}"
+             class="select-wrap">
+          <select id="AddressProvince_{{ form.id }}"
+                  class="w-full"
+                  name="address[province]" 
+                  data-province-selects
+                  data-form-id="{{ form.id }}"
+                  data-default="{{ form.province }}"></select>
+        </div>
+        
+        <input type="text" name="address[zip]" value="{{ form.zip }}" placeholder="ZIP/Postal Code">
+        <input type="text" name="address[phone]" value="{{ form.phone }}" placeholder="Phone Number">
+        
+        <button type="submit" class="button button--primary">
+          Update Address
+        </button>
+      {%- endform -%}
+    </div>
+  </dialog>
+
+  <div>
+    <h2 class="mb-6 h3">
+      Orders
+    </h2>
+    {%- if customer.orders_count == 0 -%}
+      <p>
+        You have no orders (yet)!
+      </p>
+    {%- else -%}
+
+    {%- endif -%}
+  </div>
+</div>

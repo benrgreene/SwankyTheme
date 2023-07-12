@@ -1,0 +1,16 @@
+{%- comment -%}
+
+  Required:
+    _title: title of the accordion item
+    _content: the richtext content to display of the item
+
+{%- endcomment -%}
+
+<details class="py-4">
+  <summary class="h6 text-grey-9 cursor-pointer">
+    {{- _title -}}
+  </summary>
+  <div class="mt-4">
+    {{- _content -}}
+  </div>
+</details>

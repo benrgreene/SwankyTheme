@@ -1,0 +1,30 @@
+details {
+  
+}
+
+details:first-of-type {
+  
+}
+
+details summary {
+  @apply relative flex justify-between items-center after:content-[''] list-none;
+}
+
+details summary::-webkit-details-marker,
+details summary::marker {
+  display: none;
+}
+
+details[open] .open-icon {
+  @apply hidden;
+}
+
+details:not([open]) .close-icon {
+  @apply hidden;
+}
+
+.product-details summary::after,
+.nav-accordion details summary::after,
+.collection-filters details summary::after {
+  display: none;
+}

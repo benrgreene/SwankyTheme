@@ -1,0 +1,76 @@
+<div x-data="{ layout: $store.layoutInfo }"
+     class="fixed inset-0 w-screen h-screen z-[100] flex justify-center items-center"
+     :class="layout.searchOpen ? 'block' : 'hidden'">
+  <button class="absolute inset-0 w-screen h-screen bg-black opacity-60"
+          @click="layout.setSearchOpen(false)"
+          aria-label="close search box"></button>
+  <div class="relative mx-auto py-10 px-8 w-full max-w-[90vw] xl:max-w-[70rem] max-h-[90vh] flex flex-col items-center bg-white z-1 overflow-auto"
+       x-data="{ searchTerm: '', setSearchTerm (newTerm) { this.searchTerm = newTerm } }">
+    <h2 class="mb-10 text-center text-secondary-active">
+      Search Flannel Badger
+    </h2>
+    <div class="mx-auto mb-16 input-wrap w-full max-w-[20rem]">
+      <input type="text" 
+             name="search-term"
+             id="search-term"
+             placeholder=" "
+             class="w-full"
+             @keyup="window.searchSite($event.target.value); setSearchTerm($event.target.value)">
+      <label for="search-term">
+        Search Term
+      </label>
+    </div>
+    <p x-show="((layout.searchResults.collections && layout.searchResults.collections.length === 0) || 
+               (layout.searchResults.pages && layout.searchResults.pages.length === 0) ||
+               (layout.searchResults.products && layout.searchResults.products.length == 0)) &&
+               searchTerm.length > 0">
+      There are no results for your search term.
+    </p>
+    <div class="w-full flex flex-col-reverse lg:flex-row gap-y-8 gap-x-8"
+         x-show="((layout.searchResults.collections && layout.searchResults.collections.length > 0) || 
+                 (layout.searchResults.pages && layout.searchResults.pages.length > 0) ||
+                 (layout.searchResults.products && layout.searchResults.products.length > 0)) &&
+                 searchTerm.length > 0">
+      <div class="lg:w-1/4 flex flex-col">
+        <div>
+          <p class="mb-3 text-large">Collections</p>
+          <ul class="flex flex-col gap-y-3">
+            <template x-for="collection in layout.searchResults.collections ? layout.searchResults.collections.slice(0, 3) : []"
+                      :key="`collection-${collection.handle}`">
+              <li>
+                <a :href="`/collections/${collection.handle}`"
+                   x-text="collection.title"></a>
+              </li>
+            </template>
+          </ul>
+        </div>
+
+        <div>
+          <p class="mt-6 mb-3 text-large">Pages</p>
+          <ul class="flex flex-col gap-y-3">
+            <template x-for="page in layout.searchResults.pages ? layout.searchResults.pages.slice(0, 3) : []"
+                      :key="`page-${page.handle}`">
+              <li>
+                <a :href="`/pages/${page.handle}`"
+                   x-text="page.title"></a>
+              </li>
+            </template>
+          </ul>
+        </div>
+      </div>
+
+      <div class="lg:w-3/4">
+        <p class="mb-6 text-large">Products</p>
+        <ul class="scrollbar pb-2 lg:pb-0 flex lg:grid lg:grid-cols-3 gap-x-8 gap-y-10 overflow-auto">
+          <template x-for="(product, productIndex) in layout.searchResults.products ? layout.searchResults.products : []"
+                    :key="`product-${product.handle}`">
+            <li class="min-w-[12.5rem] lg:min-w-0"
+                :class="`${productIndex >= 4 ? 'hidden' : 'block'} ${productIndex >= 3 ? 'lg:hidden' : 'lg:block'}`">
+              <product-tile x-data='product'></product-tile>
+            </li>
+          </template>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

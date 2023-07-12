@@ -1,0 +1,222 @@
+{% assign vertical_position = 'items-center' %}
+{% assign horizontal_position = 'justify-center' %}
+
+{% if section.settings.vertical == 'top' %}
+	{% assign vertical_position = 'items-start' %}
+{% elsif section.settings.vertical == 'bottom' %}
+	{% assign vertical_position = 'items-end' %}
+{% endif %}
+
+{% if section.settings.horizontal == 'left' %}
+	{% assign horizontal_position = 'justify-start' %}
+{% elsif section.settings.horizontal == 'right' %}
+	{% assign horizontal_position = 'justify-end' %}
+{% endif %}
+
+<div class="hero-{{ section.id }} relative flex {{ vertical_position }} {{ horizontal_position }}">
+	<picture>
+		<source srcset="{{ section.settings.image | img_url: '1800x' }}"
+						media="(min-width: 1024px)">
+		<source srcset="{{ section.settings.mobile_image | img_url: '1050x' }}"
+						media="(min-width: 680px)">
+		<img src="{{ section.settings.mobile_image | img_url: '680x' }}" 
+				 alt="{{ section.settings.mobile_image.alt }}"
+				 class="absolute inset-0 block w-full h-full object-cover" />
+	</picture>
+	<div class="relative my-8 mx-6 rounded-[1.25rem] py-8 px-10 text-{{ section.settings.text_color }} overflow-hidden z-1">
+		<div class="absolute bg-{{ section.settings.background }} opacity-{{ section.settings.opacity }} {% if section.settings.add_blur == 'yes' %}blur{% endif %} -inset-4"></div>
+		<div class="relative z-1">
+			<h1>{{ section.settings.title }}</h1>
+			<p>{{ section.settings.content }}</p>
+		</div>
+	</div>
+</div>
+
+<style type="text/css">
+	{%- if section.settings.hard_height == 'yes' -%}
+		.hero-{{ section.id }} { height: {{ section.settings.hero_mobile_size }}vh; }
+		@media (min-width: 1024px) {
+			.hero-{{ section.id }} { height: {{ section.settings.hero_size }}vh; }
+		}
+	{%- else -%}
+		{%- assign aspect_ratio_padding = 100 | divided_by: section.settings.image.aspect_ratio -%}
+		{%- assign mobile_aspect_ratio_padding = 100 | divided_by: section.settings.mobile_image.aspect_ratio -%}
+
+		.hero-{{ section.id }} { height: {{ mobile_aspect_ratio_padding }}vw; }
+		@media (min-width: 1024px) {
+			.hero-{{ section.id }} { height: {{ aspect_ratio_padding }}vw; }
+		}
+	{%- endif -%}
+</style>
+
+{%- render 'spacer',
+      _mobile_space: section.settings.bottom_margin_mobile,
+      _desktop_space: section.settings.bottom_margin_desktop -%}
+
+{% schema %}
+  {
+    "name": "Hero",
+    "settings": [
+      {
+        "id": "bottom_margin_mobile",
+        "label": "Bottom Margin - Mobile",
+        "type": "range",
+        "min": 0,
+        "max": 200,
+        "step": 2,
+        "default": 40
+      },
+      {
+        "id": "bottom_margin_desktop",
+        "label": "Bottom Margin - Desktop",
+        "type": "range",
+        "min": 0,
+        "max": 200,
+        "step": 2,
+        "default": 70
+      },
+      {
+        "type": "header",
+        "content": "Media"
+      },
+      {
+      	"type": "image_picker",
+      	"id": "image",
+      	"label": "Hero Desktop Image"
+      },
+      {
+      	"type": "image_picker",
+      	"id": "mobile_image",
+      	"label": "Hero Mobile Image"
+      },
+      {
+      	"type": "select",
+      	"id": "hard_height",
+      	"label": "Set Height Manually?",
+      	"options": [
+      		{ "label": "Yes", "value": "yes" },
+      		{ "label": "No", "value": "no" }
+      	],
+      	"default": "no"
+      },
+      {
+      	"type": "range",
+      	"id": "hero_size",
+      	"label": "Hero Desktop Image",
+      	"min": 0,
+      	"max": 100,
+      	"step": 1,
+      	"default": 50
+      },
+      {
+      	"type": "range",
+      	"id": "hero_mobile_size",
+      	"label": "Hero Mobile Image",
+      	"min": 0,
+      	"max": 100,
+      	"step": 1,
+      	"default": 50
+      },
+      {
+        "type": "header",
+        "content": "Content Positioning"
+      },
+      {
+      	"type": "select",
+      	"id": "horizontal",
+      	"label": "Horizontal Position",
+      	"options": [
+      		{ "label": "Left", "value": "left" },
+      		{ "label": "Center", "value": "center" },
+      		{ "label": "Right", "value": "right" }
+      	],
+      	"default": "center"
+      },
+      {
+      	"type": "select",
+      	"id": "vertical",
+      	"label": "Vertical Position",
+      	"options": [
+      		{ "label": "Top", "value": "top" },
+      		{ "label": "Center", "value": "center" },
+      		{ "label": "Bottom", "value": "bottom" }
+      	],
+      	"default": "center"
+      },
+      {
+        "type": "header",
+        "content": "Content Styling"
+      },
+      {
+      	"type": "select",
+      	"id": "background",
+      	"label": "Content Background",
+      	"options": [
+      		{ "label": "Black", "value": "black" },
+      		{ "label": "White", "value": "white" },
+      		{ "label": "Primary", "value": "primary" },
+      		{ "label": "Secondary", "value": "secondary" }
+      	],
+      	"default": "white"
+      },
+      {
+      	"type": "select",
+      	"id": "text_color",
+      	"label": "Text Color",
+      	"options": [
+      		{ "label": "Black", "value": "black" },
+      		{ "label": "White", "value": "white" },
+      		{ "label": "Primary", "value": "primary" },
+      		{ "label": "Secondary", "value": "secondary" }
+      	],
+      	"default": "black"
+      },
+      {
+      	"type": "range",
+      	"id": "opacity",
+      	"label": "Hero Content Opacity",
+      	"min": 0,
+      	"max": 100,
+      	"step": 10,
+      	"default": 80
+      },
+      {
+      	"type": "select",
+      	"id": "add_blur",
+      	"label": "Add Blur Behind Content?",
+      	"options": [
+      		{ "label": "Yes", "value": "yes" },
+      		{ "label": "No", "value": "no" }
+      	],
+      	"default": "yes"
+      },
+      {
+        "type": "header",
+        "content": "Content"
+      },
+      {
+      	"type": "text",
+      	"id": "title",
+      	"label": "Title"
+      },
+      {
+      	"type": "textarea",
+      	"id": "content",
+      	"label": "Content"
+      }
+    ],
+    "templates": [
+      "page",
+      "index",
+      "collection",
+      "product",
+      "404",
+      "blog"
+    ],
+    "presets": [
+      {
+        "name": "Hero"
+      }
+    ]
+  }
+{% endschema %}

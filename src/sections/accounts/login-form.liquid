@@ -1,0 +1,45 @@
+<div class="grid lg:grid-cols-2 gap-12">
+
+  <div class="hidden lg:block">
+    {%- render 'image-container',
+          image: section.settings.login_image,
+          image_size: '1440x1440',
+          mobile_image: settings.login_image,
+          alt_text: settings.login_image.alt -%}
+  </div>
+
+  <div class="pt-10 pl-6 pr-6 pb-14 lg:pt-[2.875rem] lg:pl-[7.5rem] lg:pr-[3.75rem] lg:pb-10 text-black">
+    <div class="w-full max-w-[30rem] flex flex-col items-center">
+      <h1 class="mb-8 lg:mb-10 text-center">Log In</h1>
+
+      {%- render 'login-form' -%}
+
+      <button class="mt-4 focus-link"
+              data-forgot-password>
+        Forgot your password?
+      </button>
+
+      <hr class="my-10 border-grey-7 w-1/2" />
+
+      <h3 class="h4 mb-4">Not signed up yet?</h3>
+      <a class="focus-link"
+         href="{{ routes.account_register_url }}">
+        Create Account
+      </a>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+  {
+    "name": "Login Form",
+    "tag": "section",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "login_image",
+        "label": "Login Image"
+      }
+    ]
+  }
+{% endschema %}

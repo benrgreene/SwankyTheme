@@ -1,0 +1,10 @@
+<div class="box-shadow-cart p-4 flex flex-col items-center bg-white">
+  <a href="/checkout"
+     class="w-full button button--atc">
+    Checkout - <span x-text="`$${(cart.cart.total_price / 100.0).toFixed(2)}`"></span>
+  </a>
+  <p class="mt-2 text-small">
+    {{- section.settings.disclaimer_text -}}
+  </p>
+</div>
+

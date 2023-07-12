@@ -1,0 +1,23 @@
+{%- capture variant_json -%}
+  {
+    "title": {{- variant.title | json -}},
+    "id": {{- variant.id | json -}},
+    "price": {{- variant.price | json -}},
+    "barcode": {{- variant.barcode | json -}},
+    "comparePrice": {{- variant.compare_at_price | json -}},
+    "available": {{- variant.available -}},
+    "availableCount": {{ variant.inventory_quantity }},
+    "images": [
+      {%- for image in variant.metafields.global.variant_images.value -%}
+        {
+          "variant_image": {{- image | json -}},
+          "image_alt_text": {{- image.alt | default: variant.title | json -}}
+        }
+        {%- unless forloop.last -%},{%- endunless -%}
+      {%- endfor -%}
+    ],
+    "options": {{- variant.options | json -}}
+  }
+{%- endcapture -%}
+
+{{- variant_json -}}

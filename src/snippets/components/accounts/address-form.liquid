@@ -1,0 +1,81 @@
+{%- form 'customer_address', address -%}
+  <div class="grid grid-cols-2 gap-x-4 gap-y-6">
+    <div class="input-wrap w-full">
+      <input type="text" class="w-full min-w-0" id="AddressFirstName_{{ form.id }}" name="address[first_name]" value="{{ form.first_name }}" autocomplete="given-name" placeholder=" ">
+      <label for="AddressFirstName_{{ form.id }}">First Name</label>
+    </div>
+
+    <div class="input-wrap w-full">
+      <input type="text" class="w-full min-w-0" id="AddressLastName_{{ form.id }}" name="address[last_name]" value="{{ form.last_name }}" autocomplete="family-name" placeholder=" ">
+      <label for="AddressLastName_{{ form.id }}">Last Name</label>
+    </div>
+
+    <div class="input-wrap w-full">
+      <input type="text" class="w-full min-w-0" id="AddressAddress1_{{ form.id }}" name="address[address1]" value="{{ form.address1 }}" autocomplete="address-line1" placeholder=" ">
+      <label for="AddressAddress1_{{ form.id }}">Address 1</label>
+    </div>
+
+    <div class="input-wrap w-full">
+      <input type="text" class="w-full min-w-0" id="AddressAddress2_{{ form.id }}" name="address[address2]" value="{{ form.address2 }}" autocomplete="address-line2" placeholder=" ">
+      <label for="AddressAddress2_{{ form.id }}">Address 2</label>
+    </div>
+
+    <div class="input-wrap w-full">
+      <input type="text" class="w-full h-full min-w-0" id="AddressCompany_{{ form.id }}" name="address[company]" value="{{ form.company }}" autocomplete="organization" placeholder=" ">
+      <label for="AddressCompany_{{ form.id }}">Company</label>
+    </div>
+
+    <div class="select-wrap w-full">
+      <label for="AddressCountry_{{ form.id }}">Country</label>
+      <select
+        id="AddressCountry_{{ form.id }}"
+        class="w-full min-w-0"
+        name="address[country]"
+        data-address-country-select
+        data-default="{{ form.country }}"
+        data-form-id="{{ form.id }}"
+        autocomplete="country">
+        {{ all_country_option_tags }}
+      </select>
+    </div>
+
+    <div class="input-wrap w-full">
+      <input type="text" class="w-full min-w-0" id="AddressCity_{{ form.id }}" name="address[city]" value="{{ form.city }}" autocomplete="address-level2" placeholder=" " required>
+      <label for="AddressCity_{{ form.id }}">City</label>
+    </div>
+
+    <div id="AddressProvinceContainer_{{ form.id }}" class="select-wrap w-full">
+      <label for="AddressProvince_{{ form.id }}">State</label>
+      <select id="AddressProvince_{{ form.id }}"
+              class="w-full min-w-0"
+              name="address[province]"
+              data-default="{{ form.province }}"
+              autocomplete="address-level1">
+      </select>
+    </div>
+
+    <div class="input-wrap w-full">
+      <input type="text" class="w-full min-w-0" id="AddressZip_{{ form.id }}" name="address[zip]" value="{{ form.zip }}" autocapitalize="characters" autocomplete="postal-code" placeholder=" ">
+      <label for="AddressZip_{{ form.id }}">Zip Code</label>
+    </div>
+
+    <div class="input-wrap w-full">
+      <input type="tel" class="w-full min-w-0" id="AddressPhone_{{ form.id }}"  name="address[phone]" value="{{ form.phone }}" autocomplete="tel" placeholder=" " required>
+      <label for="AddressPhone_{{ form.id }}">Phone</label>
+    </div>
+
+    <div class="check-wrap md:col-span-2">
+      <input type="checkbox" id="address_default_address_{{ form.id }}" name="address[default]" {% if address == customer.default_address %}value="1" checked{% endif %}>
+      <label for="address[default]">Set as default</label>
+    </div>
+
+    <div class="flex items-center md:col-span-2 flex-wrap md:flex-nowrap justify-center md:justify-start gap-x-4">
+      <button class="button button--secondary">
+        Update
+      </button>
+      <button type="reset" class="focus-link">
+        Cancel
+      </button>
+    </div>
+  </div>
+{%- endform -%}

@@ -1,0 +1,63 @@
+.focuser {
+  outline-color: var(--ada-outline);  
+}
+
+.button {
+  @apply relative inline-block border-2 rounded-[1.25rem] py-2 px-6 text-center tracking-[0.03rem] hover:tracking-[0.06rem] text-[1.1rem] font-bold no-underline uppercase transition-all after:content-[''] after:absolute after:block after:-inset-0.5 hover:after:-inset-1.5 after:border-2 after:rounded-[1.25rem] hover:after:rounded-[1.5rem] after:border-primary after:bg-transparent after:transition-all;
+}
+
+.button:focus,
+.button:active,
+.button:focus-visible {
+  @apply tracking-[0.06rem] after:-inset-1.5 after:rounded-[1.5rem];
+}
+
+.button--atc {
+  @apply border-tertiary bg-tertiary hover:border-tertiary-active hover:bg-tertiary-active text-black hover:text-black after:border-tertiary hover:after:border-tertiary-active;
+}
+
+.button--primary {
+  @apply border-primary bg-primary hover:border-primary-active hover:bg-primary-active text-black hover:text-black;
+}
+
+.button--primary.button--outline {
+  @apply bg-transparent hover:bg-primary-active text-black hover:text-white;
+}
+
+.button--secondary {
+  @apply border-secondary bg-secondary hover:border-secondary-active hover:bg-secondary-active text-white hover:text-white after:border-secondary;
+}
+
+.button--secondary:focus,
+.button--secondary:active,
+.button--secondary:focus-visible {
+  @apply border-secondary-active bg-secondary-active text-white;
+}
+
+.button--secondary.button--outline {
+  @apply bg-transparent hover:bg-secondary-active text-secondary hover:text-white;
+}
+
+.button--ghost {
+  @apply border-black bg-black text-white hover:bg-white hover:text-black after:border-black;
+}
+
+.button--ghost.button--outline {
+  @apply border-black bg-transparent text-black hover:bg-black hover:text-white after:border-black;
+}
+
+.button.button--short {
+  @apply py-1;
+}
+
+.button--narrow {
+  @apply px-2;
+}
+
+.button[disabled] {
+  @apply opacity-50 pointer-events-none touch-none;
+}
+
+.icon-button {
+  cursor: pointer;
+}

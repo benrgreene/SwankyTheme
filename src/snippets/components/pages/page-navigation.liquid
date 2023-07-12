@@ -1,0 +1,25 @@
+{%- comment -%}
+
+  Required:
+    _menu: the menu to display as the navigation
+
+{%- endcomment -%}
+
+{%- unless _menu.links == blank -%}
+  <ul class="hidden lg:block lg:pt-20 list-none">
+    {%- for link in _menu.links -%}
+      {% if link.current == true %}
+        {%- assign classes = "text-black bg-grey-5" -%}
+      {%- else -%}
+        {%- assign classes = "text-grey-9 hover:bg-grey-3" -%}
+      {%- endif -%}
+
+      <li>
+        <a href="{{- link.url -}}"
+           class="inline-block py-4 pl-14 w-full no-underline hover:text-black font-semibold transition-all {{ classes }}">
+          {{- link.title -}}
+        </a>
+      </li>
+    {%- endfor -%}
+  </ul>
+{%- endunless -%}

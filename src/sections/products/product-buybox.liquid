@@ -1,0 +1,100 @@
+{%- render 'product-breadcrumbs' -%}
+
+<div class="mt-6 lg:mt-0 ccontain grid lg:grid-cols-[1fr,28rem] gap-y-8 gap-x-12" 
+     x-data="{ productInfo: $store.productInfo }">
+  {%- render 'product-gallery' -%}
+  {%- render 'product-buybox' -%}
+</div>
+
+<style type="text/css">
+  {%- for block in section.blocks -%}
+    {% if block.settings.swatch_image %}
+      .swatch-{{ block.settings.swatch_name | downcase | replace: ' ', '-' }} { background: url('{{ block.settings.swatch_image | img_url: '75x' }}'); }
+    {% else %}
+      .swatch-{{ block.settings.swatch_name | downcase | replace: ' ', '-' }} { background-color: {{ block.settings.swatch_color }}; }
+    {% endif %}
+  {%- endfor -%}
+</style>
+
+{%- render 'spacer',
+      _mobile_space: section.settings.bottom_margin_mobile,
+      _desktop_space: section.settings.bottom_margin_desktop -%}
+
+{% schema %}
+  {
+    "name": "Product Buybox",
+    "settings": [
+      {
+        "id": "bottom_margin_mobile",
+        "label": "Bottom Margin - Mobile",
+        "type": "range",
+        "min": 0,
+        "max": 200,
+        "step": 2,
+        "default": 40
+      },
+      {
+        "id": "bottom_margin_desktop",
+        "label": "Bottom Margin - Desktop",
+        "type": "range",
+        "min": 0,
+        "max": 200,
+        "step": 2,
+        "default": 70
+      },
+      {
+        "id": "product_threshold",
+        "type": "number",
+        "label": "Product Alert Threshold",
+        "default": 10
+      },
+      {
+        "id": "low_stock_msg",
+        "type": "text",
+        "label": "Low Stock Message",
+        "default": "This product is running out!"
+      },
+      {
+        "label": "Show Breadcrumbs In Buybox",
+        "id": "breadcrumbs_in_buybox",
+        "type": "select",
+        "options": [
+          { "label": "Yes", "value": "true" },
+          { "label": "No", "value": "false" }
+        ],
+        "default": "true"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "color-swatch",
+        "name": "Color Swatch",
+        "settings": [
+          {
+            "id": "swatch_name",
+            "label": "Swatch Name",
+            "type": "text"
+          },
+          {
+            "id": "swatch_color",
+            "label": "Swatch Color",
+            "type": "color"
+          },
+          {
+            "id": "swatch_image",
+            "label": "Swatch Image",
+            "type": "image_picker"
+          }
+        ]
+      }
+    ],
+    "templates": [
+      "product"
+    ],
+    "presets": [
+      {
+        "name": "Product Buybox"
+      }
+    ]
+  }
+{% endschema %}

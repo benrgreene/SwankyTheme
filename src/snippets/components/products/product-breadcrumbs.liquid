@@ -1,0 +1,23 @@
+{%- assign collection_title = 'All Products' -%}
+{%- assign collection_link = '/collections/all' -%}
+{%- unless collection == blank -%}
+  {%- assign collection_title = collection.title -%}
+  {%- assign collection_link = collection.url -%}
+{%- endunless -%}
+
+
+<ul class="my-4 ccontain hidden lg:flex items-center">
+  <li>
+    <a href="/">
+      Home
+    </a><span class="inline-block mx-2">/</span>
+  </li>
+  <li>
+    <a href="{{- collection_link -}}">
+      {{- collection_title -}}
+    </a><span class="inline-block mx-2">/</span>
+  </li>
+  <li>
+    {{- product.title -}}
+  </li>
+</ul>

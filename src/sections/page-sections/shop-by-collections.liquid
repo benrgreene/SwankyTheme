@@ -1,0 +1,152 @@
+{%- liquid 
+  if section.blocks.size == 2
+    assign classes_string = "lg:col-span-2 lg:pb-[50%],lg:col-start-2 lg:col-span-2 lg:pb-[50%]"
+  elsif section.blocks.size == 3
+    assign classes_string = "lg:row-span-2,lg:col-start-2 lg:col-span-2 lg:pb-[50%],lg:col-start-2 lg:col-span-2 lg:pb-[50%]"
+  elsif section.blocks.size == 4
+    assign classes_string = "lg:col-span-1 lg:pb-[100%],lg:col-start-2 lg:col-span-2 lg:pb-[50%],lg:col-span-2 lg:pb-[50%],lg:col-span-1 lg:pb-[100%]"
+  endif
+
+  assign classes = classes_string | split: ','
+-%}
+
+<div class="ccontain">
+  <h2 class="mb-6">
+    {{- section.settings.title -}}
+  </h2>
+
+  <div class="grid gap-8 lg:gap-12 lg:grid-cols-3">
+    {%- for block in section.blocks -%}
+      {%- assign collectionObject = collections[block.settings.collection] -%}
+      <a href="{{- collectionObject.url -}}/"
+         aria-label="go to {{ collectionObject.title }} collection page"
+         class="group block relative h-0 lg:min-h-[100%] pb-[50%] rounded-[1.25rem] overflow-hidden {{ classes[forloop.index0] }}">
+        {%- assign image_size = '600x' -%}
+        {%- if section.blocks.size == 3 and forloop.index0 == 0 -%}
+          {%- assign image_size = 'x900' -%}
+        {%- endif -%}
+        <img io-img-src="{{- collectionObject.image | img_url: image_size -}}"
+             alt="{{ collectionObject.title }}"
+             class="absolute inset-0 h-full w-full object-cover scale-1 group-hover:transform group-hover:scale-[1.05] transition-all" />
+        <p class="absolute bottom-2 left-2 px-3 py-2 h3 rounded-[0.75rem] overflow-hidden">
+          <span class="block absolute -top-2 -left-2 w-[120%] h-[120%] bg-{{ block.settings.title_background }} opacity-{{ block.settings.title_opacity }} blur "></span>
+          <span class="relative text-{{ block.settings.title_color}} group-hover:text-{{ block.settings.title_color}}-active">{{- collectionObject.title -}}</span>
+        </p>
+      </a>
+    {%- endfor -%}
+
+    {%- if section.blocks.size == 2 -%}
+      <div class="hidden lg:block rounded-[1.25rem] lg:col-start-3 lg:row-start-1 bg-secondary"></div>
+      <div class="hidden lg:block rounded-[1.25rem] lg:col-start-1 lg:row-start-2 bg-tertiary"></div>
+    {%- endif -%}
+  </div>
+</div>
+
+{%- render 'spacer',
+    _mobile_space: section.settings.bottom_margin_mobile,
+    _desktop_space: section.settings.bottom_margin_desktop -%}
+
+{% schema %}
+  {
+    "name": "Shop By Collections",
+    "tag": "section",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Section Spacing"
+      },
+      {
+        "id": "bottom_margin_mobile",
+        "label": "Bottom Margin - Mobile",
+        "type": "range",
+        "min": 0,
+        "max": 200,
+        "step": 2,
+        "default": 40
+      },
+      {
+        "id": "bottom_margin_desktop",
+        "label": "Bottom Margin - Desktop",
+        "type": "range",
+        "min": 0,
+        "max": 200,
+        "step": 2,
+        "default": 70
+      },
+      {
+        "type": "header",
+        "content": "Section Settings"
+      },
+      {
+        "type": "text",
+        "label": "Title",
+        "id": "title",
+        "default": "Shop By Collections"
+      }
+    ],
+    "blocks": [
+      {
+        "name": "Collection",
+        "type": "collection_tile",
+        "settings": [
+          {
+            "type": "collection",
+            "id": "collection",
+            "label": "Collection To Display",
+            "info": "Will use the collections feature image"
+          },
+          {
+            "type": "select",
+            "id": "title_color",
+            "label": "Title Color",
+            "options": [
+              { "value": "white", "label": "White" },
+              { "value": "black", "label": "Black" },
+              { "value": "primary", "label": "Primary" },
+              { "value": "secondary", "label": "Secondary" },
+              { "value": "tertiary", "label": "Tertiary" }
+            ],
+            "default": "primary"
+          },
+          {
+            "type": "select",
+            "id": "title_background",
+            "label": "Title Background",
+            "options": [
+              { "value": "white", "label": "White" },
+              { "value": "black", "label": "Black" },
+              { "value": "primary", "label": "Primary" },
+              { "value": "primary-active", "label": "Primary - Active" },
+              { "value": "secondary", "label": "Secondary" },
+              { "value": "secondary-active", "label": "Secondary - Active" },
+              { "value": "tertiary", "label": "Tertiary" },
+              { "value": "tertiary-active", "label": "Tertiary - Active" }
+            ],
+            "default": "black"
+          },
+          {
+            "type": "range",
+            "id": "title_opacity",
+            "label": "Title Background Opacity",
+            "min": 0,
+            "max": 100,
+            "step": 10,
+            "default": 80
+          }
+        ]
+      }
+    ],
+    "templates": [
+      "page",
+      "index",
+      "collection",
+      "product",
+      "404"
+    ],
+    "presets": [
+      {
+        "name": "Shop By Collections"
+      }
+    ]
+  }
+{% endschema %}

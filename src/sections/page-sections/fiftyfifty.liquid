@@ -1,0 +1,146 @@
+{% assign vertical_position = 'items-center' %}
+{% assign horizontal_position = 'justify-center' %}
+
+{% if section.settings.horizontal == 'left' %}
+  {% assign horizontal_position = 'justify-start' %}
+{% elsif section.settings.horizontal == 'right' %}
+  {% assign horizontal_position = 'justify-end' %}
+{% endif %}
+
+<div class="ccontain-small relative grid lg:grid-cols-2 gap-y-8 items-center">
+  {%- render 'image-container',
+        image: section.settings.image,
+        image_size: '700x',
+        mobile_image: section.settings.mobile_image,
+        mobile_image_size: '500x',
+        alt: section.settings.image.alt
+        classes: 'rounded-[1.25rem] overflow-hidden' -%}
+  <div class="relative lg:my-8 lg:mx-6 lg:py-8 lg:px-16 overflow-hidden z-1">
+    <h2>{{ section.settings.title }}</h2>
+    <p class="mt-6">{{ section.settings.content }}</p>
+    <div class="mt-6 flex gap-6 items-center">
+      {%- for block in section.blocks-%}
+        <a href="{{ block.settings.cta_url }}"
+           class="{{ block.settings.cta_type }}">
+          {{- block.settings.cta_text -}}
+        </a>
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
+
+
+{%- render 'spacer',
+      _mobile_space: section.settings.bottom_margin_mobile,
+      _desktop_space: section.settings.bottom_margin_desktop -%}
+
+
+{% schema %}
+  {
+    "name": "50/50",
+    "max_blocks": 2,
+    "settings": [
+      {
+        "id": "bottom_margin_mobile",
+        "label": "Bottom Margin - Mobile",
+        "type": "range",
+        "min": 0,
+        "max": 200,
+        "step": 2,
+        "default": 40
+      },
+      {
+        "id": "bottom_margin_desktop",
+        "label": "Bottom Margin - Desktop",
+        "type": "range",
+        "min": 0,
+        "max": 200,
+        "step": 2,
+        "default": 70
+      },
+      {
+        "type": "header",
+        "content": "Media"
+      },
+      {
+        "type": "image_picker",
+        "id": "image",
+        "label": "Hero Desktop Image"
+      },
+      {
+        "type": "image_picker",
+        "id": "mobile_image",
+        "label": "Hero Mobile Image"
+      },
+      {
+        "type": "header",
+        "content": "Content Positioning"
+      },
+      {
+        "type": "select",
+        "id": "horizontal",
+        "label": "Content Side",
+        "options": [
+          { "label": "Left", "value": "left" },
+          { "label": "Right", "value": "right" }
+        ],
+        "default": "left"
+      },
+      {
+        "type": "header",
+        "content": "Content"
+      },
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Title"
+      },
+      {
+        "type": "textarea",
+        "id": "content",
+        "label": "Content"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "cta",
+        "name": "CTA",
+        "settings": [
+          {
+            "type": "text",
+            "id": "cta_text",
+            "label": "CTA Text"
+          },
+          {
+            "type": "url",
+            "id": "cta_url",
+            "label": "CTA URL"
+          },
+          {
+            "type": "select",
+            "id": "cta_type",
+            "label": "CTA Type",
+            "options": [
+              { "label": "Primary", "value": "button button--primary" },
+              { "label": "Secondary", "value": "button button--secondary" },
+              { "label": "Focus Link", "value": "focus-link" }
+            ],
+            "default": "focus-link"
+          }
+        ]
+      }
+    ],
+    "templates": [
+      "page",
+      "index",
+      "collection",
+      "product",
+      "404"
+    ],
+    "presets": [
+      {
+        "name": "50/50"
+      }
+    ]
+  }
+{% endschema %}

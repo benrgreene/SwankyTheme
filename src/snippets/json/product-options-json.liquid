@@ -1,0 +1,6 @@
+{
+  {%- for option_group in product.options_with_values -%}
+    "{{ option_group.name }}": "{{ option_group.selected_value }}"
+    {%- unless forloop.last -%},{%- endunless -%}
+  {%- endfor -%}
+}

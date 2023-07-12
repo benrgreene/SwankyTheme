@@ -1,0 +1,85 @@
+<div class="py-20 bg-grey-1">
+  <div class="ccontain grid lg:grid-cols-5 gap-6 gap-x-16">
+    <div class="lg:pt-4 lg:col-span-2">
+      <h2>
+        {{ section.settings.title }}
+      </h2>
+      <div>
+        {{ product.metafields.custom.product_deets.value }}
+      </div>
+    </div>
+    <div class="lg:col-span-3">
+      {%- assign even_number = product.metafields.custom.product_info.value.size | modulo: 2 -%}
+      {%- assign number_items = product.metafields.custom.product_info.value.size -%}
+      {%- if even_number == 1 -%}
+        {% assign number_items = number_items | minus: 1 %}
+      {%- endif -%}
+      {% assign loopMax = number_items | divided_by: 2 | minus: 1 -%}
+
+      {% for index in (0..loopMax) %}
+        {%- assign summary_title = index | times: 2 -%}
+        {%- assign summary_content = index | times: 2 | plus: 1 -%}
+        <details class="product-details">
+          <summary class="text-black hover:text-secondary py-5 cursor-pointer">
+            <p class="h5">
+              {{ product.metafields.custom.product_info.value[summary_title] }}
+            </p>
+            <span class="open-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" height="1rem" viewBox="0 0 448 512"><path d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32V224H48c-17.7 0-32 14.3-32 32s14.3 32 32 32H192V432c0 17.7 14.3 32 32 32s32-14.3 32-32V288H400c17.7 0 32-14.3 32-32s-14.3-32-32-32H256V80z" fill="currentColor"/></svg>
+            </span>
+            <span class="close-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" height="1rem" viewBox="0 0 448 512">\<path d="M432 256c0 17.7-14.3 32-32 32L48 288c-17.7 0-32-14.3-32-32s14.3-32 32-32l352 0c17.7 0 32 14.3 32 32z" fill="currentColor"/></svg>
+            </span>
+          </summary>
+          <div class="mb-5">
+            {{ product.metafields.custom.product_info.value[summary_content] }}
+          </div>
+        </details>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+{%- render 'spacer',
+      _mobile_space: section.settings.bottom_margin_mobile,
+      _desktop_space: section.settings.bottom_margin_desktop -%}
+
+{% schema %}
+  {
+    "name": "Product Details",
+    "settings": [
+      {
+        "id": "bottom_margin_mobile",
+        "label": "Bottom Margin - Mobile",
+        "type": "range",
+        "min": 0,
+        "max": 200,
+        "step": 2,
+        "default": 40
+      },
+      {
+        "id": "bottom_margin_desktop",
+        "label": "Bottom Margin - Desktop",
+        "type": "range",
+        "min": 0,
+        "max": 200,
+        "step": 2,
+        "default": 70
+      },
+      {
+        "id": "title",
+        "type": "text",
+        "label": "Section Title",
+        "default": "Product Details"
+      }
+    ],
+    "templates": [
+      "product"
+    ],
+    "presets": [
+      {
+        "name": "Product Details"
+      }
+    ]
+  }
+{% endschema %}

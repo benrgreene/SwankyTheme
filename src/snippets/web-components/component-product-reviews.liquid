@@ -1,0 +1,37 @@
+<template id="component-product-reviews">
+  <div>
+    <h2 class="h3 text-center">
+      Reviews for {{ product.title -}}
+    </h2>
+    
+    <div class="flex items-center justify-center">
+      {%- unless product.metafields.custom.product_reviews == blank -%}
+        <div class="">
+          {%- render 'product-review-avg' -%}
+        </div>
+      {%- endunless -%}
+    </div>
+    
+    <div>
+      <template x-for="review in productReviews.reviews.slice(reviewPage, (reviewPage + 1) * 10)">
+        <div class="mt-8 py-8 px-12 flex gap-x-8 bg-grey-2">
+          <div class="">
+            <p x-text="review.user.displayName"></p>
+          </div>
+          <div class="grow">
+            <div class="flex justify-between items-center">
+              <h3 x-text="review.title"></h3>
+              <p x-text="window.formatReviewDate(review.createdAt)"></p>
+            </div>
+            <p x-text="review.content"></p>
+            <div class="flex justify-between">
+              <div>
+                thumbs up
+              </div>
+            </div>
+          </div>
+        </div>
+      </template>
+    </div>
+  </div>
+</template>

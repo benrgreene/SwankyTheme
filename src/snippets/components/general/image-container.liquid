@@ -1,0 +1,68 @@
+{%- comment -%}
+
+  Required:
+    image: the image object to display
+    image_size: the size to pass to the img_url filter to size the image
+
+
+  Optional:
+    classes: a string of classes to add to the picture element
+
+    alt_text: the alt text to use - defaults to the images alt text
+
+    mobile_image: the image object to display on mobile - defaults to desktop image
+    mobile_image_size: the size to pass to the img_url filter to size the mobile image - defaults to '800x'
+    breakpoint: the size (in rems) to break from the mobile image to the desktop image - defaults to '64rem'
+
+    ratio: ratio to display the image at
+    mobile_ratio: ratio to display mobile image at
+
+    lazyload: a boolean for whether to lazyload image or not - defaults to true
+
+{%- endcomment -%}
+
+{%- assign lazyload = lazyload | default: true -%}
+{%- assign img_src_tag = 'io-img-src' -%}
+{%- assign img_srcset_tag = 'io-img-srcset' -%}
+{%- unless lazyload == true -%}
+  {%- assign img_src_tag = 'src' -%}
+  {%- assign img_srcset_tag = 'srcset' -%}
+{%- endunless -%}
+
+
+{%- assign alt_text = alt_text | default: image.alt -%}
+{%- assign mobile_image = mobile_image | default: image -%}
+{%- assign mobile_image_size = mobile_image_size | default: '800x' -%}
+{%- assign breakpoint = breakpoint | default: '64rem' -%}
+
+{%- if ratio -%}
+  {%- assign aspect_ratio_padding = ratio -%}
+  {%- assign mobile_aspect_ratio_padding = mobile_ratio -%}
+{%- else -%}
+  {%- assign aspect_ratio_padding = 100 | divided_by: image.aspect_ratio -%}
+  {%- assign mobile_aspect_ratio_padding = 100 | divided_by: mobile_image.aspect_ratio -%}
+{%- endif -%}
+
+
+<style type="text/css">
+  .img-container-{{ image.id }} { padding-bottom: {{ mobile_aspect_ratio_padding }}%; }
+  @media (min-width: {{ breakpoint }}) {
+    .img-container-{{ image.id }} { padding-bottom: {{ aspect_ratio_padding }}%; }
+  }
+</style>
+
+<picture class="img-container-{{ image.id }} block relative w-full {{ classes }}">
+  {%- if cropped -%}
+    <source {{ img_srcset_tag }}="{{- image | img_url: image_size, crop: cropped -}}"
+            media="(min-width: {{ breakpoint }})">
+    <img {{ img_src_tag }}="{{- mobile_image | img_url: mobile_image_size, crop: cropped -}}"
+            alt="{{- alt_text -}}"
+            class="absolute w-full" />
+  {%- else -%}
+    <source {{ img_srcset_tag }}="{{- image | img_url: image_size -}}"
+            media="(min-width: {{ breakpoint }})">
+    <img {{ img_src_tag }}="{{- mobile_image | img_url: mobile_image_size -}}"
+            alt="{{- alt_text -}}"
+            class="absolute w-full" />
+  {%- endif -%}
+</picture>

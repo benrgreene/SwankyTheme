@@ -1,0 +1,28 @@
+{%- comment -%}
+
+  Required:
+    _page_content: the contents of the page to display as the main body
+    _page_menu: the handle of the menu to display as the navigation
+
+{%- endcomment -%}
+
+{%- assign _menu = linklists[_page_menu] -%}
+{%- assign _full_width = false -%}
+{%- if _menu.links.size == 0 or _menu.links == blank -%}
+  {%- assign _full_width = true -%}
+{%- endif -%}
+
+{%- render 'page-mobile-navigation',
+      _menu: _menu -%}
+
+<div class="{%- if _full_width == false -%}lg:grid lg:grid-cols-page lg:gap-x-8{%- else -%}ccontain-small{%- endif -%}">
+
+  {%- render 'page-navigation',
+        _menu: _menu -%}
+
+  <div class="mt-10 lg:mt-0 lg:pt-20 max-w-full wysiwyg overflow-hidden">
+    <div class="ccontain-small">
+      {{- page.content -}}
+    </div>
+  </div>
+</div>

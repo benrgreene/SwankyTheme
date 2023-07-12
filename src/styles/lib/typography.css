@@ -1,0 +1,100 @@
+* {
+  font-family: 'Open Sans', sans-serif;
+}
+
+h1,
+.h1 {
+  @apply text-[2rem] leading-10 lg:text-[3.375rem] lg:leading-[4rem] font-semibold;
+  font-family: 'Montserrat Alternates', sans-serif;
+}
+
+h2,
+.h2 {
+  @apply text-[1.625rem] leading-[2.125rem] lg:text-[2.625rem] lg:leading-[3.375rem] font-semibold;
+  font-family: 'Montserrat Alternates', sans-serif;
+}
+
+h3,
+.h3 {
+  @apply text-[1.5rem] leading-[2rem] lg:text-[2.125rem] lg:leading-[2.75rem] font-semibold;
+  font-family: 'Montserrat Alternates', sans-serif;
+}
+
+h4,
+.h4 {
+  @apply text-[1.375rem] leading-[1.875rem] lg:text-[1.75rem] lg:leading-[2.375rem] font-semibold;
+  font-family: 'Montserrat Alternates', sans-serif;
+}
+
+h5,
+.h5 {
+  @apply text-[1.25rem] leading-[1.75rem] lg:text-[1.5rem] lg:leading-[2rem] font-semibold;
+  font-family: 'Montserrat Alternates', sans-serif;
+}
+
+h6,
+.h6 {
+  @apply text-[1.125rem] leading-[1.625rem] lg:text-[1.25rem] lg:leading-[1.75rem] font-semibold;
+  font-family: 'Montserrat Alternates', sans-serif;
+}
+
+.font-header {
+  font-family: 'Montserrat Alternates', sans-serif;
+}
+
+.fancypants {
+  background: -webkit-linear-gradient(to right, var(--secondary-active), var(--tertiary-active));
+  background: linear-gradient(to right, var(--secondary-active), var(--tertiary-active));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.sub-small {
+  @apply text-[0.875rem] leading-[1.25rem] font-semibold;
+}
+
+.sub-regular {
+  @apply text-[1rem] leading-[1.375rem] font-semibold;
+}
+
+.sub-large {
+  @apply text-[1.125rem] leading-[1.5rem] font-semibold;
+}
+
+.caps-small {
+  @apply text-[0.875rem] leading-[1.25rem] tracking-[0.025rem] font-semibold uppercase;
+}
+
+.caps-regular {
+  @apply text-[1rem] leading-[1.375rem] tracking-[0.05rem] font-semibold uppercase;
+}
+
+.caps-large {
+  @apply text-[1.125rem] leading-[1.5rem] tracking-[0.075rem] font-semibold uppercase;
+}
+
+p,
+.text {
+  @apply text-[1rem] leading-[1.5rem];
+}
+
+.text-large {
+  @apply text-[1.25rem] leading-[1.688rem];
+}
+
+.lg\:text-large {
+  @apply lg:text-[1.25rem] lg:leading-[1.688rem];
+}
+
+.text-small {
+  @apply text-[0.875rem] leading-[1.25rem];
+}
+
+.text-xsmall {
+  @apply text-[0.75rem] leading-[1.125rem];
+}
+
+.p-inherit p {
+  color: inherit;
+  font-size: inherit;
+}

@@ -1,0 +1,21 @@
+{%- if settings.is_development_theme == 'yes' -%}
+  <script id="__bs_script__">//<![CDATA[
+      document.write("<script async src='https://localhost:3000/browser-sync/browser-sync-client.js?v=2.26.14'><\/script>")
+  //]]></script>
+{%- endif -%}
+
+{%- if content_for_header contains "Shopify.designMode" -%}
+  <script type="text/javascript">
+    const loadSections = () => {
+      window.document.dispatchEvent(new Event("DOMContentLoaded", {
+        bubbles: true,
+        cancelable: true
+      }));
+    }
+
+    const events = [
+      'shopify:section:select'
+    ];
+    events.forEach((shopifyEvent) => document.addEventListener(shopifyEvent, () => loadSections()));
+  </script>
+{%- endif -%}

@@ -1,0 +1,173 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "eHouse All Nàtural",
+    "theme_version": "0.1.0",
+    "theme_author": "eHouse",
+    "theme_documentation_url": "https:\/\/shopify.github.io\/slate\/",
+    "theme_support_url": "https:\/\/github.com\/Shopify\/slate"
+  },
+  {
+    "name": "Theme Settings",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "site_favicon",
+        "label": "Site Favicon"
+      }
+    ]
+  },
+  {
+    "name": "Accounts",
+    "settings": [
+      {
+        "type": "link_list",
+        "id": "account_navigation",
+        "label": "Account Navigation"
+      }
+    ]
+  },
+  {
+    "name": "Theme Colors",
+    "settings": [
+      {
+        "type": "color",
+        "id": "primary_color",
+        "label": "Primary Color",
+        "default": "#67C4AA"
+      },
+      {
+        "type": "color",
+        "id": "primary_active_color",
+        "label": "Primary Color - Active",
+        "default": "#529D88"
+      },
+      {
+        "type": "color",
+        "id": "secondary_color",
+        "label": "Secondary Color",
+        "default": "#B572E1"
+      },
+      {
+        "type": "color",
+        "id": "secondary_active_color",
+        "label": "Secondary Color - Active",
+        "default": "#915BB4"
+      },
+      {
+        "type": "color",
+        "id": "tertiary_color",
+        "label": "Tertiary Color",
+        "default": "#B572E1"
+      },
+      {
+        "type": "color",
+        "id": "tertiary_active_color",
+        "label": "Tertiary Color - Active",
+        "default": "#915BB4"
+      },
+      {
+        "type": "color",
+        "id": "error_color",
+        "label": "Error Color",
+        "default": "#D64123"
+      },
+      {
+        "type": "color",
+        "id": "grey_one_color",
+        "label": "Grey - 1",
+        "default": "#FAFAFA"
+      },
+      {
+        "type": "color",
+        "id": "grey_two_color",
+        "label": "Grey - 2",
+        "default": "#F7F7F7"
+      },
+      {
+        "type": "color",
+        "id": "grey_three_color",
+        "label": "Grey - 3",
+        "default": "#E4E4E4"
+      },
+      {
+        "type": "color",
+        "id": "grey_four_color",
+        "label": "Grey - 4",
+        "default": "#DEDEDE"
+      },
+      {
+        "type": "color",
+        "id": "grey_five_color",
+        "label": "Grey - 5",
+        "default": "#D9D9D9"
+      },
+      {
+        "type": "color",
+        "id": "grey_six_color",
+        "label": "Grey - 6",
+        "default": "#C1C2C3"
+      },
+      {
+        "type": "color",
+        "id": "grey_seven_color",
+        "label": "Grey - 7",
+        "default": "#A7A7A7"
+      },
+      {
+        "type": "color",
+        "id": "grey_eight_color",
+        "label": "Grey - 8",
+        "default": "#575656"
+      },
+      {
+        "type": "color",
+        "id": "grey_nine_color",
+        "label": "Grey - 9",
+        "default": "#333333"
+      }
+    ]
+  },
+  {
+    "name": "Email Signup",
+    "settings": [
+      {
+        "type": "text",
+        "id": "email_title",
+        "label": "Title",
+        "default": "Signup to our Email"
+      },
+      {
+        "type": "textarea",
+        "id": "email_content",
+        "label": "Content",
+        "default": "Get emails about new releases, sales, and other fun things going on!"
+      }
+    ]
+  },
+  {
+    "name": "Development Settings",
+    "settings": [
+      {
+        "type": "select",
+        "id": "display_preview",
+        "label": "Display Preview Bar",
+        "options": [
+          { "label": "Yes", "value": "yes" },
+          { "label": "No", "value": "no" }
+        ],
+        "default": "yes"
+      },
+      {
+        "type": "select",
+        "id": "is_development_theme",
+        "label": "Is Development Theme?",
+        "options": [
+          { "label": "Yes", "value": "yes" },
+          { "label": "No", "value": "no" }
+        ],
+        "default": "no"
+      }
+    ]
+  }
+]
