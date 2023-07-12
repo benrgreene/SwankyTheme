@@ -1,9 +1,9 @@
 {
-  "name": "flannel-panda",
+  "name": "swanky-theme",
   "version": "1.1.0",
   "license": "MIT",
   "keywords": [],
-  "author": "eHouse",
+  "author": "ben greene",
   "scripts": {
     "start": "gulp build && gulp watch",
     "deploy": "gulp build",
