@@ -41,39 +41,39 @@
     <div class="mb-11 grid grid-cols-2 lg:grid-cols-6 gap-10">
       <div>
         <div class="mb-2 relative pb-[100%]">
-          <div class="absolute w-full h-full bg-primary"></div>
+          <div class="border-regular absolute w-full h-full bg-primary"></div>
         </div>
         Primary
       </div>
       <div>
         <div class="mb-2 relative pb-[100%]">
-          <div class="absolute w-full h-full bg-primary-active"></div>
+          <div class="border-regular absolute w-full h-full bg-primary-active"></div>
         </div>
         Primary - Active
       </div>
 
       <div>
         <div class="mb-2 relative pb-[100%]">
-          <div class="absolute w-full h-full bg-secondary"></div>
+          <div class="border-regular absolute w-full h-full bg-secondary"></div>
         </div>
         Secondary
       </div>
       <div>
         <div class="mb-2 relative pb-[100%]">
-          <div class="absolute w-full h-full bg-secondary-active"></div>
+          <div class="border-regular absolute w-full h-full bg-secondary-active"></div>
         </div>
         Secondary - Active
       </div>
 
       <div>
         <div class="mb-2 relative pb-[100%]">
-          <div class="absolute w-full h-full bg-tertiary"></div>
+          <div class="border-regular absolute w-full h-full bg-tertiary"></div>
         </div>
         Tertiary
       </div>
       <div>
         <div class="mb-2 relative pb-[100%]">
-          <div class="absolute w-full h-full bg-tertiary-active"></div>
+          <div class="border-regular absolute w-full h-full bg-tertiary-active"></div>
         </div>
         Tertiary - Active
       </div>
@@ -83,55 +83,55 @@
     <div class="grid grid-cols-2 lg:grid-cols-6 gap-10">
       <div>
         <div class="mb-2 relative pb-[100%]">
-          <div class="absolute w-full h-full bg-grey-1"></div>
+          <div class="border-regular absolute w-full h-full bg-grey-1"></div>
         </div>
         Grey 1
       </div>
       <div>
         <div class="mb-2 relative pb-[100%]">
-          <div class="absolute w-full h-full bg-grey-2"></div>
+          <div class="border-regular absolute w-full h-full bg-grey-2"></div>
         </div>
         Grey 2
       </div>
       <div>
         <div class="mb-2 relative pb-[100%]">
-          <div class="absolute w-full h-full bg-grey-3"></div>
+          <div class="border-regular absolute w-full h-full bg-grey-3"></div>
         </div>
         Grey 3
       </div>
       <div>
         <div class="mb-2 relative pb-[100%]">
-          <div class="absolute w-full h-full bg-grey-4"></div>
+          <div class="border-regular absolute w-full h-full bg-grey-4"></div>
         </div>
         Grey 4
       </div>
       <div>
         <div class="mb-2 relative pb-[100%]">
-          <div class="absolute w-full h-full bg-grey-5"></div>
+          <div class="border-regular absolute w-full h-full bg-grey-5"></div>
         </div>
         Grey 5
       </div>
       <div>
         <div class="mb-2 relative pb-[100%]">
-          <div class="absolute w-full h-full bg-grey-6"></div>
+          <div class="border-regular absolute w-full h-full bg-grey-6"></div>
         </div>
         Grey 6
       </div>
       <div>
         <div class="mb-2 relative pb-[100%]">
-          <div class="absolute w-full h-full bg-grey-7"></div>
+          <div class="border-regular absolute w-full h-full bg-grey-7"></div>
         </div>
         Grey 7
       </div>
       <div>
         <div class="mb-2 relative pb-[100%]">
-          <div class="absolute w-full h-full bg-grey-8"></div>
+          <div class="border-regular absolute w-full h-full bg-grey-8"></div>
         </div>
         Grey 8
       </div>
       <div>
         <div class="mb-2 relative pb-[100%]">
-          <div class="absolute w-full h-full bg-grey-9"></div>
+          <div class="border-regular absolute w-full h-full bg-grey-9"></div>
         </div>
         Grey 9
       </div>
@@ -270,20 +270,15 @@
     </div>
   </div>
 
-  <div class="ccontain-small my-6 rounded-md border border-grey-3 py-6">
-    <h3 class="h3 mb-6 col-span-2">Accordions</h3>
 
-    {%- render 'accordion-item',
-          _title: 'Title',
-          _content: 'This is my accordion content' -%}
-
-    {%- render 'accordion-item',
-          _title: 'Title 2',
-          _content: 'This is my accordion content' -%}
-
-    {%- render 'accordion-item',
-          _title: 'Title 3',
-          _content: 'This is my accordion content' -%}
+  <div class="my-10 ccontain">
+    <h3 class="h3 mb-6 col-span-2">Product Tiles</h3>
+    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+      {%- assign all_prods = collections['all'] -%}
+      {%- for product in all_prods.products limit: 4 -%}
+        <product-tile x-data='{% render "product-json", product: product %}'></product-tile>
+      {%- endfor -%}
+    </div>
   </div>
 
 </div>

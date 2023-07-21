@@ -1,0 +1,136 @@
+<div class="ccontain">
+  <h1>Cart</h1>
+  <div data-cart-items
+       class="flex flex-col gap-y-10"></div>
+</div>
+
+<script type="text/javascript">
+  class CartPageItem extends HTMLElement {
+    constructor () {
+      super();
+
+      if (!this.hasAttribute('isLoaded')) {
+        const template = document.querySelector(`#CartPageItem`);
+        this.appendChild(template.content.cloneNode(true));
+        this.setAttribute('isLoaded', 'true'); 
+      }
+
+      CartPageItem.observedAttributes.forEach((attribute) => {
+        const attributeValue = this.getAttribute(attribute);
+        const elementToUpdate = this.querySelector(`[data-item-${attribute}]`);
+        elementToUpdate.innerHTML = attributeValue;
+      });
+
+      const itemKey = this.getAttribute('key');
+      const upQuantityButton = this.querySelector('[data-update-quantity]');
+
+      upQuantityButton.setAttribute('quantity', itemQuantity);
+      upQuantityButton.addEventListener('click', () => {
+        console.log(itemKey)
+        console.log(upQuantityButton.getAttribute('quant'))
+        window.setQuantity(itemKey, itemQuantity + 1)
+      });
+    }
+
+    static get observedAttributes() { 
+      return ['title', 'price', 'description', 'quantity'];
+    }
+
+    attributeChangedCallback (name, oldValue, newValue) {
+      const elementToUpdate = this.querySelector(`[data-item-${name}]`);
+      elementToUpdate.innerHTML = newValue;
+    }
+  }
+  customElements.define("cart-page-item", CartPageItem);
+
+  window.setQuantity = (itemKey, newQuantity) => {
+    fetch('/cart/update.json', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        key: itemKey,
+        quantity: newQuantity
+      })
+    })
+      .then((blob) => blob.json())
+      .then((data) => {
+        console.log(data)
+      })
+  }
+
+  fetch('/cart?view=json')
+    .then((blob) => blob.json())
+    .then((cart) => {
+      const itemContainer = document.querySelector('[data-cart-items]');
+      cart.items.forEach((item) => {
+        itemContainer.innerHTML += `<cart-page-item id="${item.product.handle}"
+                                                    title="${item.title}"
+                                                    price="$${(item.product.price / 100.0).toFixed(2)}"
+                                                    description="${item.product.description}"
+                                                    quantity="${item.quantity}"
+                                                    key="${item.key}"></cart-page-item>`;
+        setTimeout(() => {
+          const el = document.querySelector(`#${item.product.handle}`);
+          el.setAttribute('title', el.getAttribute('title') + ' new!');
+        }, 3000);
+      });
+    });
+</script>
+
+<template id="CartPageItem">
+  <div data-item-title></div>
+  <div data-item-price></div>
+  <div data-item-description></div>
+  <div class="flex items-center">
+    <div data-item-quantity></div>
+    <button data-update-quantity>
+      +
+    </button>
+  </div>
+</template>
+
+{%- render 'spacer',
+    _mobile_space: section.settings.bottom_margin_mobile,
+    _desktop_space: section.settings.bottom_margin_desktop -%}
+
+{% schema %}
+  {
+    "name": "Cart Page",
+    "tag": "section",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Section Spacing"
+      },
+      {
+        "id": "bottom_margin_mobile",
+        "label": "Bottom Margin - Mobile",
+        "type": "range",
+        "min": 0,
+        "max": 200,
+        "step": 2,
+        "default": 40
+      },
+      {
+        "id": "bottom_margin_desktop",
+        "label": "Bottom Margin - Desktop",
+        "type": "range",
+        "min": 0,
+        "max": 200,
+        "step": 2,
+        "default": 70
+      }
+    ],
+    "templates": [
+      "cart"
+    ],
+    "presets": [
+      {
+        "name": "Cart Page",
+        "category": "Cart"
+      }
+    ]
+  }
+{% endschema %}

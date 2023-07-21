@@ -12,15 +12,11 @@ input[type="email"],
 input[type="password"],
 input[type="date"],
 input[type="tel"] {
-  @apply rounded-md border border-black py-2 px-5 min-w-[10rem] bg-white cursor-pointer transition-all;
+  @apply border border-black py-2 px-5 min-w-[10rem] bg-white cursor-pointer transition-all;
 }
 
 textarea {
-  @apply rounded-md border border-black py-2 px-5 bg-white cursor-pointer transition-all;
-}
-
-input.input--rouded[type] {
-  @apply rounded-[1.25rem];
+  @apply border border-black py-2 px-5 bg-white cursor-pointer transition-all;
 }
 
 textarea:placeholder-shown,

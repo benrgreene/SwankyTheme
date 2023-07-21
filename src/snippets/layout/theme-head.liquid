@@ -9,7 +9,7 @@
 <link rel="shortcut icon" href="{{ settings.site_favicon | img_url: '32x32' }}" type="image/png">
 
 <link rel="stylesheet" href="{{- 'theme.css' | asset_url -}}" />
+<link rel="stylesheet" href="{{- 'theme-styling.css' | asset_url -}}" />
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@600&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+<!-- Should be a full Google Fonts HTML import -->
+{{- settings.font_import -}}

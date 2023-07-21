@@ -1,0 +1,28 @@
+.border-big { border-radius: {{- settings.border_radius_base * 2 -}}px; }
+.border-regular { border-radius: {{- settings.border_radius_base -}}px; }
+.border-small { border-radius: {{- settings.border_radius_base / 2 -}}px; }
+
+
+
+input, select, .button { border-radius: {{ settings.border_radius_base }}px; }
+
+
+* { font-family: {{ settings.body_font }}; }
+input, select, textarea { font-family: {{ settings.input_font }}; }
+button, .button { font-family: {{ settings.button_font }}; }
+
+h1, .h1 { font-family: {{ settings.h1_font }}; font-size: {{ settings.h1_mobile_size }}px; }
+h2, .h2 { font-family: {{ settings.h2_font }}; font-size: {{ settings.h2_mobile_size }}px; }
+h3, .h3 { font-family: {{ settings.h3_font }}; font-size: {{ settings.h3_mobile_size }}px; }
+h4, .h4 { font-family: {{ settings.h4_font }}; font-size: {{ settings.h4_mobile_size }}px; }
+h5, .h5 { font-family: {{ settings.h5_font }}; font-size: {{ settings.h5_mobile_size }}px; }
+h6, .h6 { font-family: {{ settings.h6_font }}; font-size: {{ settings.h6_mobile_size }}px; }
+
+@media screen and (min-width: 1024px) {
+	h1, .h1 { font-size: {{ settings.h1_desktop_size }}px; }
+	h2, .h2 { font-size: {{ settings.h2_desktop_size }}px; }
+	h3, .h3 { font-size: {{ settings.h3_desktop_size }}px; }
+	h4, .h4 { font-size: {{ settings.h4_desktop_size }}px; }
+	h5, .h5 { font-size: {{ settings.h5_desktop_size }}px; }
+	h6, .h6 { font-size: {{ settings.h6_desktop_size }}px; }
+}

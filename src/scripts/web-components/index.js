@@ -11,5 +11,4 @@ const createWebCompClass = (idToPull) => {
 document.addEventListener("DOMContentLoaded", () => {
 	customElements.define('product-tile', createWebCompClass('component-product-tile'));
 	customElements.define('filter-list', createWebCompClass('component-filter-list'));
-	customElements.define('product-reviews', createWebCompClass('component-product-reviews'));
 });
