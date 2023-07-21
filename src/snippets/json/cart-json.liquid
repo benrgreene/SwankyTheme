@@ -5,6 +5,8 @@
   "total_price": {{- cart.total_price | json -}},
   "note": {{- cart.note | json -}},
   "price": {{- cart.total_price | json -}},
+  "cart_discount": {{- cart.total_discount | json -}},
+  "subtotal_price": {{- cart.items_subtotal_price | json -}},
   "items": [
     {%- for line_item in cart.items -%}
       {

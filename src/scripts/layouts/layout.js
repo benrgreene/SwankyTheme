@@ -9,6 +9,7 @@ import { setupObservers } from 'scripts/utils/LazyLoad.js';
 import { setupFormFields } from 'scripts/components/FormErrors.js';
 import { setupSnapSlider } from 'scripts/components/SnapSlider.js';
 import { setupAnimatedTiles } from 'scripts/components/AnimatedProducts.js';
+import { setupCartUpsells } from 'scripts/components/CartUpsells.js';
 
 import 'scripts/components/Search.js';
 import 'scripts/components/InlineCart.js';
@@ -22,4 +23,5 @@ document.addEventListener("DOMContentLoaded", () => {
   setupFormFields();
   setupSnapSlider();
   setupAnimatedTiles();
+  setupCartUpsells();
 });

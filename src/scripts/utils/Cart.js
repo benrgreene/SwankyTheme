@@ -1,8 +1,9 @@
 export const getCart = () => {
-  return fetch('/cart?view=json')
+  return fetch('/cart?view=json-view')
     .then((blob) => blob.json())
     .then((cart) => {
       Alpine.store('cartInfo').setCartInfo(cart);
+      document.dispatchEvent(new Event("cartUpdated"));
       return cart;
     });
 };

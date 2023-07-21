@@ -19,7 +19,7 @@
   "url": {{- product.url | json -}},
   "feature_image": {{- product.featured_image | img_url: 'master' | json -}},
   "image": {
-    "src": {{- product.featured_image | img_url: '400x' | json -}},
+    "src": {{- product.featured_image | img_url: '400x400', crop: 'center' | json -}},
     "alt": {{ product.featured_image.alt | json }}
   },
   "reviewScore": {{ product.metafields.custom.product_reviews | json }},

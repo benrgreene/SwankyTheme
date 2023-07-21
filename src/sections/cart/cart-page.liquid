@@ -1,95 +1,38 @@
 <div class="ccontain">
   <h1>Cart</h1>
-  <div data-cart-items
-       class="flex flex-col gap-y-10"></div>
-</div>
+  <div class="grid lg:grid-cols-[5fr_3fr] gap-10 items-start"
+       x-data="{ cart: $store.cartInfo }">
+    <div :class="cart.updatingCart ? 'opacity-40 pointer-events-none touch-none' : ''">
+      <template x-for="(item, index) in cart.cart.items"
+                :key="item.key">
+        <cart-item x-data="{ item: item, itemIndex: index }"></cart-item>
+      </template>
+    </div>
+    <div class="px-12 py-6 flex flex-col bg-grey-2">
+      <p class="mb-6 h4 text-center">
+        Cart Summary
+      </p>
 
-<script type="text/javascript">
-  class CartPageItem extends HTMLElement {
-    constructor () {
-      super();
+      <p class="mt-1 flex justify-between">
+        Original Price <span x-text="`$${(cart.cart.subtotal_price / 100.0).toFixed(2)}`"></span>
+      </p>
+      <p class="mt-1 flex justify-between">
+        Discount <span x-text="`$${(cart.cart.cart_discount / 100.0).toFixed(2)}`"></span>
+      </p>
+      <p class="mt-1 flex justify-between">
+        Subtotal <span x-text="`$${(cart.cart.price / 100.0).toFixed(2)}`"></span>
+      </p>
 
-      if (!this.hasAttribute('isLoaded')) {
-        const template = document.querySelector(`#CartPageItem`);
-        this.appendChild(template.content.cloneNode(true));
-        this.setAttribute('isLoaded', 'true'); 
-      }
-
-      CartPageItem.observedAttributes.forEach((attribute) => {
-        const attributeValue = this.getAttribute(attribute);
-        const elementToUpdate = this.querySelector(`[data-item-${attribute}]`);
-        elementToUpdate.innerHTML = attributeValue;
-      });
-
-      const itemKey = this.getAttribute('key');
-      const upQuantityButton = this.querySelector('[data-update-quantity]');
-
-      upQuantityButton.setAttribute('quantity', itemQuantity);
-      upQuantityButton.addEventListener('click', () => {
-        console.log(itemKey)
-        console.log(upQuantityButton.getAttribute('quant'))
-        window.setQuantity(itemKey, itemQuantity + 1)
-      });
-    }
-
-    static get observedAttributes() { 
-      return ['title', 'price', 'description', 'quantity'];
-    }
-
-    attributeChangedCallback (name, oldValue, newValue) {
-      const elementToUpdate = this.querySelector(`[data-item-${name}]`);
-      elementToUpdate.innerHTML = newValue;
-    }
-  }
-  customElements.define("cart-page-item", CartPageItem);
-
-  window.setQuantity = (itemKey, newQuantity) => {
-    fetch('/cart/update.json', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        key: itemKey,
-        quantity: newQuantity
-      })
-    })
-      .then((blob) => blob.json())
-      .then((data) => {
-        console.log(data)
-      })
-  }
-
-  fetch('/cart?view=json')
-    .then((blob) => blob.json())
-    .then((cart) => {
-      const itemContainer = document.querySelector('[data-cart-items]');
-      cart.items.forEach((item) => {
-        itemContainer.innerHTML += `<cart-page-item id="${item.product.handle}"
-                                                    title="${item.title}"
-                                                    price="$${(item.product.price / 100.0).toFixed(2)}"
-                                                    description="${item.product.description}"
-                                                    quantity="${item.quantity}"
-                                                    key="${item.key}"></cart-page-item>`;
-        setTimeout(() => {
-          const el = document.querySelector(`#${item.product.handle}`);
-          el.setAttribute('title', el.getAttribute('title') + ' new!');
-        }, 3000);
-      });
-    });
-</script>
-
-<template id="CartPageItem">
-  <div data-item-title></div>
-  <div data-item-price></div>
-  <div data-item-description></div>
-  <div class="flex items-center">
-    <div data-item-quantity></div>
-    <button data-update-quantity>
-      +
-    </button>
+      <a href="/checkout/"
+         class="mt-16 button button--atc w-full">
+        Checkout
+      </a>
+      <p class="mt-2 text-center text-small">
+        * Shipping and taxes will be calculated at checkout
+      </p>
+    </div>
   </div>
-</template>
+</div>
 
 {%- render 'spacer',
     _mobile_space: section.settings.bottom_margin_mobile,

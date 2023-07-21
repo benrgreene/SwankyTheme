@@ -79,7 +79,10 @@
 
     <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-2 xl:grid-cols-3 gap-x-8 gap-y-6 items-start">
       <template x-for="(product, index) in collection.products" :key="`product-${product.handle}`">
-        <product-tile x-data='product'></product-tile>
+        <product-tile :title="product.title"
+                      :image="product.image.src"
+                      :price="`$${(product.price / 100.0).toFixed(2)}`"
+                      :href="product.url"></product-tile>
       </template>
 
       <div class="mt-10 col-start-1 col-span-2 md:col-span-3 lg:col-span-2 xl:col-span-3 flex items-center justify-center">

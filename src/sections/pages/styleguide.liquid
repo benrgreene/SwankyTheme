@@ -276,7 +276,10 @@
     <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
       {%- assign all_prods = collections['all'] -%}
       {%- for product in all_prods.products limit: 4 -%}
-        <product-tile x-data='{% render "product-json", product: product %}'></product-tile>
+        <product-tile title="{{ product.title }}"
+                      image="{{- product.featured_image | img_url: '400x400', crop: 'center' -}}"
+                      price="{{- product.price | money -}}"
+                      href="/products/{{- product.handle -}}/"></product-tile>
       {%- endfor -%}
     </div>
   </div>

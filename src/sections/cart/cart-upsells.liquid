@@ -1,0 +1,115 @@
+<div class="ccontain">
+  <h2 class="mb-6">
+    {{- section.settings.title -}}
+  </h2>
+  <div data-cart-upsells="{{- section.id -}}"
+       class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+    {%- if recommendations.performed? -%}
+      {%- assign displayed_upsell = false -%}
+      {%- assign products_displayed = 0 -%}
+
+      {%- capture handles_in_cart -%}
+        {%- for item in cart.items -%}
+          |{{- item.product.handle -}}|
+        {%- endfor -%}
+      {%- endcapture -%}  
+
+      {%- for block in section.blocks -%}
+        {%- if handles_in_cart contains block.settings.requirement -%}
+          {%- unless handles_in_cart contains block.settings.upsell -%}
+            {%- if products_displayed < 4 -%}
+              {%- assign product = all_products[block.settings.upsell] -%}
+              <product-tile title="{{ product.title }}"
+                            image="{{- product.featured_image | img_url: '400x400', crop: 'center' -}}"
+                            price="{{- product.price | money -}}"
+                            href="/products/{{- product.handle -}}/"></product-tile>
+            {%- endif -%}
+            {%- assign products_displayed = products_displayed | plus: 1 -%}
+          {%- endunless -%}
+        {%- endif -%}
+      {%- endfor -%}
+
+      {%- assign left_to_display = 4 | minus: products_displayed -%}
+      {%- for product in recommendations.products limit: left_to_display -%}
+        <product-tile title="{{ product.title }}"
+                      image="{{- product.featured_image | img_url: '400x400', crop: 'center' -}}"
+                      price="{{- product.price | money -}}"
+                      href="/products/{{- product.handle -}}/"></product-tile>
+      {%- endfor -%}
+    {%- endif -%}
+  </div>
+</div>
+
+{%- render 'spacer',
+    _mobile_space: section.settings.bottom_margin_mobile,
+    _desktop_space: section.settings.bottom_margin_desktop -%}
+
+{% schema %}
+  {
+    "name": "Cart Upsells",
+    "tag": "section",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Section Spacing"
+      },
+      {
+        "id": "bottom_margin_mobile",
+        "label": "Bottom Margin - Mobile",
+        "type": "range",
+        "min": 0,
+        "max": 200,
+        "step": 2,
+        "default": 40
+      },
+      {
+        "id": "bottom_margin_desktop",
+        "label": "Bottom Margin - Desktop",
+        "type": "range",
+        "min": 0,
+        "max": 200,
+        "step": 2,
+        "default": 70
+      },
+      {
+        "type": "header",
+        "content": "Section Content"
+      },
+      {
+        "id": "title",
+        "type": "text",
+        "label": "Title",
+        "default": "Recommended For You"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "upsell",
+        "name": "Upsell",
+        "settings": [
+          {
+            "id": "requirement",
+            "type": "product",
+            "label": "Upsell Requirement"
+          },
+          {
+            "id": "upsell",
+            "type": "product",
+            "label": "Upsell Product"
+          }
+        ]
+      }
+    ],
+    "templates": [
+      "cart",
+      "search",
+      "product",
+      "collection"
+    ],
+    "presets": [
+      {
+        "name": "Cart Upsells"
+      }
+    ]
+  }
+{% endschema %}

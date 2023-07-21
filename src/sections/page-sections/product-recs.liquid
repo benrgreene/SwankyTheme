@@ -9,7 +9,10 @@
   </h2>
   <div class="grid grid-cols-2 lg:grid-cols-4 gap-6">
     {%- for product in products_to_use limit: 4 -%}
-      <product-tile x-data='{% render "product-json", product: product %}'
+      <product-tile title="{{ product.title }}"
+                    image="{{- product.featured_image | img_url: '400x400', crop: 'center' -}}"
+                    price="{{- product.price | money -}}"
+                    href="/products/{{- product.handle -}}/"
                     data-animate-tiles="{{- forloop.index0 -}}"
                     class="transform scale-[0.7] opacity-0 transition-all duration-500"></product-tile>
 
