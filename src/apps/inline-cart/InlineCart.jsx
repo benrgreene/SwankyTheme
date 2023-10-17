@@ -47,7 +47,7 @@ const InlineCart = ({ data }) => {
   }
 
   return (
-    <aside className={`fixed top-4 bottom-4 rounded-[1.25rem] flex flex-col max-h-screen max-w-[calc(100vw-32px)] w-[30rem] z-[101] transition-all duration-200 ${openState ? 'right-4' : 'right-cart'}`}>
+    <aside className={`fixed top-4 bottom-4 border-big flex flex-col max-h-screen max-w-[calc(100vw-32px)] w-[30rem] z-[101] transition-all duration-200 ${openState ? 'right-4' : 'right-cart'}`}>
       {openState &&
         <button className="absolute -top-4 -bottom-4 -right-4 w-[150vw] bg-black opacity-50 z-[-1]"
                 aria-label="close cart"

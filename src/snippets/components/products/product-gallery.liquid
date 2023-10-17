@@ -5,7 +5,7 @@
       <img :src="image.variant_image.replace('.jpg', '_850x.jpg').replace('.png', '_850x.png').replace('.webp', '_850x.webp')"
            :alt="image.image_alt_text"
            :class="index === 0 && 'col-span-2'"
-           class="rounded-[1.25rem] snap-center cursor-pointer"
+           class="border-big snap-center cursor-pointer"
            dialogr-img="true" 
            :gallery-image="`gallery-image-${index}`" />
     </template>

@@ -20,7 +20,7 @@
       {%- assign collectionObject = collections[block.settings.collection] -%}
       <a href="{{- collectionObject.url -}}/"
          aria-label="go to {{ collectionObject.title }} collection page"
-         class="group block relative h-0 lg:min-h-[100%] pb-[50%] rounded-[1.25rem] overflow-hidden {{ classes[forloop.index0] }}">
+         class="group block relative h-0 lg:min-h-[100%] pb-[50%] border-big overflow-hidden {{ classes[forloop.index0] }}">
         {%- assign image_size = '600x' -%}
         {%- if section.blocks.size == 3 and forloop.index0 == 0 -%}
           {%- assign image_size = 'x900' -%}
@@ -36,8 +36,8 @@
     {%- endfor -%}
 
     {%- if section.blocks.size == 2 -%}
-      <div class="hidden lg:block rounded-[1.25rem] lg:col-start-3 lg:row-start-1 bg-secondary"></div>
-      <div class="hidden lg:block rounded-[1.25rem] lg:col-start-1 lg:row-start-2 bg-tertiary"></div>
+      <div class="hidden lg:block border-big lg:col-start-3 lg:row-start-1 bg-secondary"></div>
+      <div class="hidden lg:block border-big lg:col-start-1 lg:row-start-2 bg-tertiary"></div>
     {%- endif -%}
   </div>
 </div>

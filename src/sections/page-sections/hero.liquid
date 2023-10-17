@@ -23,7 +23,7 @@
 				 alt="{{ section.settings.mobile_image.alt }}"
 				 class="absolute inset-0 block w-full h-full object-cover" />
 	</picture>
-	<div class="relative my-8 mx-6 rounded-[1.25rem] py-8 px-10 text-{{ section.settings.text_color }} overflow-hidden z-1">
+	<div class="relative my-8 mx-6 border-big py-8 px-10 text-{{ section.settings.text_color }} overflow-hidden z-1">
 		<div class="absolute bg-{{ section.settings.background }} opacity-{{ section.settings.opacity }} {% if section.settings.add_blur == 'yes' %}blur{% endif %} -inset-4"></div>
 		<div class="relative z-1">
 			<h1>{{ section.settings.title }}</h1>
@@ -57,6 +57,10 @@
   {
     "name": "Hero",
     "settings": [
+      {
+        "type": "header",
+        "content": "Section Spacing"
+      },
       {
         "id": "bottom_margin_mobile",
         "label": "Bottom Margin - Mobile",

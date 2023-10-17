@@ -1,42 +1,108 @@
-{%- assign questions_indecies = 'one,two,three' | split: ',' -%}
-{%- for question_group in shop.metaobjects.quiz_questions.values -%}
-  {% assign questions = question_group %}
+{%- assign unique_one = '' -%}
+{%- assign unique_two = '' -%}
+{%- assign unique_three = '' -%}
+{%- assign script_objects = '' -%}
+
+{%- for block in section.blocks -%}
+  {%- capture script_objects -%}
+    {{- script_objects -}}
+    { answerOne: '{{- block.settings.answer_one -}}', answerTwo: '{{- block.settings.answer_two -}}', answerthree: '{{- block.settings.answer_three -}}' }
+    {%- unless forloop.last -%},{%- endunless -%}
+  {%- endcapture -%}
+
+  {%- unless unique_one contains block.settings.answer_one -%}
+    {%- capture answers_one -%}
+      {{- answers_one -}}
+      <option value="{{- block.settings.answer_one | replace: ' ', '-' -}}">
+        {{- block.settings.answer_one -}}
+      </option>
+    {%- endcapture -%}
+    {%- assign unique_one = unique_one | append: block.settings.answer_one -%}
+  {%- endunless -%}
+  
+  {%- unless unique_two contains block.settings.answer_two -%}
+    {%- capture answers_two -%}
+      {{- answers_two -}}
+      <option value="{{- block.settings.answer_two | replace: ' ', '-' -}}">
+        {{- block.settings.answer_two -}}
+      </option>
+    {%- endcapture -%}
+    {%- assign unique_two = unique_two | append: block.settings.answer_two -%}
+  {%- endunless -%}
+
+  {%- unless unique_three contains block.settings.answer_three -%}
+    {%- capture answers_three -%}
+      {{- answers_three -}}
+      <option value="{{- block.settings.answer_three | replace: ' ', '-' -}}">
+        {{- block.settings.answer_three -}}
+      </option>
+    {%- endcapture -%}
+    {%- assign unique_three = unique_three | append: block.settings.answer_three -%}
+  {%- endunless -%}
 {%- endfor -%}
 
-<section class="ccontain grid grid-cols-2">
-  <div>
-    {%- for n in (0..2) -%}
-      <div>
-        {%- assign question_key = 'question_' | append: questions_indecies[n] -%}
-        {%- assign answer_key = 'answer_' | append: questions_indecies[n] -%}
-        
-        {%- capture current_answers -%}
-          {%- for answer in shop.metaobjects.quiz_answer.values -%}
-            {{ answer[answer_key] }}
-            {% unless forloop.last %},{%- endunless -%}
-          {%- endfor -%}
-        {%- endcapture -%}
-        {%- assign current_answers = current_answers | split: ',' | uniq -%}
+<script type="text/javascript">
+  window.quizAnswers = [{{ script_objects }}];
+</script>
 
-        <p>{{ questions[question_key] }}</p>
-        <select>
-          <option>Select...</option>
-          {%- for answer in current_answers -%}
-            <option value="{{ answer }}">
-              {{ answer }}
-            </option>  
-          {%- endfor -%}
+<section class="ccontain">
+  <h2>{{- section.settings.title -}}</h2>
+  <div class="mt-10 flex justify-between">
+    <div class="flex flex-col gap-y-8">
+      <div class="select-wrap">
+        <select data-quiz-question-one
+                id="quiz-question-one"
+                name="quiz-question-one">
+          {{- answers_one -}}
         </select>
+        <label for="quiz-question-one">
+          {{- section.settings.question_one -}}
+        </label>
       </div>
-    {%- endfor -%}
+
+      <div data-question-two-contain class="hidden">
+        <div class="select-wrap">
+          <select data-quiz-question-two
+                  id="quiz-question-two"
+                  name="quiz-question-two">
+            {{- answers_two -}}
+          </select>
+          <label for="quiz-question-two">
+            {{- section.settings.question_two -}}
+          </label>
+        </div>
+      </div>
+
+      <div data-question-three-contain class="hidden">
+        <div class="select-wrap">
+          <select data-quiz-question-three
+                  data-question-three-contain
+                  id="quiz-question-three"
+                  name="quiz-question-three">
+            {{- answers_three -}}
+          </select>
+          <label for="quiz-question-three">
+            {{- section.settings.question_three -}}
+          </label>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
+
+{%- render 'spacer',
+      _mobile_space: section.settings.bottom_margin_mobile,
+      _desktop_space: section.settings.bottom_margin_desktop -%}
 
 
 {% schema %}
   {
     "name": "Quiz",
     "settings": [
+      {
+        "type": "header",
+        "content": "Section Spacing"
+      },
       {
         "id": "bottom_margin_mobile",
         "label": "Bottom Margin - Mobile",
@@ -56,6 +122,10 @@
         "default": 70
       },
       {
+        "type": "header",
+        "content": "Section Content"
+      },
+      {
         "type": "text",
         "id": "title",
         "label": "Title"
@@ -64,6 +134,49 @@
         "type": "textarea",
         "id": "content",
         "label": "Content"
+      },
+      {
+        "type": "text",
+        "id": "question_one",
+        "label": "Question One"
+      },
+      {
+        "type": "text",
+        "id": "question_two",
+        "label": "Question Two"
+      },
+      {
+        "type": "text",
+        "id": "question_three",
+        "label": "Question Three"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "quiz_answer",
+        "name": "Quiz Answer",
+        "settings": [
+          {
+            "type": "text",
+            "id": "answer_one",
+            "label": "Answer One"
+          },
+          {
+            "type": "text",
+            "id": "answer_two",
+            "label": "Answer Two"
+          },
+          {
+            "type": "text",
+            "id": "answer_three",
+            "label": "Answer Three"
+          },
+          {
+            "type": "product",
+            "id": "recommendation",
+            "label": "Product Recommendation"
+          }
+        ]
       }
     ],
     "templates": [

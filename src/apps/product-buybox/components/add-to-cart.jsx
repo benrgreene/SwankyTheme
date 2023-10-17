@@ -28,7 +28,7 @@ const AddToCart = () => {
 
   return (
     <div className="mt-6 flex items-stretch">
-      <div className="mr-2 border rounded-[1.25rem] flex items-center">
+      <div className="mr-2 border border-big flex items-center">
         <button className="py-3 px-4 h-full"
                 aria-label="decrease quantity"
                 onClick={() => window.setState('productQuantity', Math.max(1, quantity - 1))}>

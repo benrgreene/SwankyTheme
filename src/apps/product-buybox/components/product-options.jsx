@@ -31,7 +31,7 @@ const ProductOptions = () => {
           {optionGroup.name !== 'Color' &&
             <div className="grid grid-cols-3 gap-x-3 gap-y-4">
               {optionGroup.values.map((option, optionIndex) =>
-                <button className={`relative overflow-hidden border rounded-[1.25rem] py-2 transition-all after:content-[''] after:absolute after:inset-0 after:z-[-1] ${optionState.includes(option) ? 'after:bg-primary after:opacity-70' : 'after:bg-white hover:after:bg-primary hover:after:opacity-40 after:transition-all'}`}
+                <button className={`relative overflow-hidden border border-big py-2 transition-all after:content-[''] after:absolute after:inset-0 after:z-[-1] ${optionState.includes(option) ? 'after:bg-primary after:opacity-70' : 'after:bg-white hover:after:bg-primary hover:after:opacity-40 after:transition-all'}`}
                         key={`variant-option-${option}`}
                         onClick={() => setSelectedOption(optionGroup, option)}>
                   <span className="relative z-1">{option}</span>

@@ -38,7 +38,7 @@
           <template x-for="option in optionGroup.values">
             <div>
               <button x-show="optionGroup.name !== 'Color'"
-                      class="relative overflow-hidden border w-full rounded-[1.25rem] py-2 outline-offset-[3px]"
+                      class="relative overflow-hidden border w-full border-big py-2 outline-offset-[3px]"
                       @click="productInfo.setSelectedOptions(optionGroup.name, option)">
                 <span class="absolute top-0 left-0 block h-full w-full hover:bg-primary transition-all"
                       :class="productInfo.selectedOptions[optionGroup.name] === option ? 'bg-primary opacity-70' : 'bg-white opacity-40'"></span>
