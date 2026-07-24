@@ -8,26 +8,65 @@ product template.
 
 ## Metafield definitions
 
-These are the metafields the theme actually reads. Definition names, validations and
-descriptions are **not retrieved from store** — the types below are inferred from how the
-theme consumes each value, so confirm them in Settings → Custom data → Products before
-relying on them.
+Types and names below are **read from the store's metafield definitions** (Settings →
+Custom data → Products), not inferred.
 
-### Product metafields
+### Product metafields the theme reads
 
-| Identifier | Inferred type | Purpose |
-|---|---|---|
-| `custom.product_reviews` | Number (decimal) | The product's average star rating, 0–5. Drives the star display and the "X out of Y reviews" line, and is emitted as `ratingValue` in product structured data. |
-| `custom.review_count` | Number (integer) | How many reviews the product has. Shown next to the rating and emitted as `reviewCount` in structured data. |
-| `custom.product_deets` | Rich text | The long-form product description shown in the left column of the **Product Details** section. |
-| `custom.product_info` | List (text or rich text) | The accordion rows in the **Product Details** section, stored as a **flat alternating list**: entry 0 is the first row's title, entry 1 is its body, entry 2 is the second row's title, and so on. See the caveat below. |
-| `custom.related_variants` | List of product references | Overrides the **Product Recommendations** section on this product's page. When set, these products are shown instead of the collection chosen in the section settings. |
+| Identifier | Definition name | Type | Purpose |
+|---|---|---|---|
+| `custom.product_reviews` | Product Reviews | Number (decimal) | The product's average star rating, 0–5. Drives the star display and the "X out of Y reviews" line, and is emitted as `ratingValue` in product structured data. |
+| `custom.review_count` | Review Count | Number (integer) | How many reviews the product has. Shown next to the rating and emitted as `reviewCount` in structured data. |
+| `custom.product_deets` | Product Details | Multi-line text | The long-form product description shown in the left column of the **Product Details** section. |
+| `custom.product_info` | Product Info | List of single line text | The accordion rows in the **Product Details** section, stored as a **flat alternating list**: entry 0 is the first row's title, entry 1 is its body, entry 2 is the second row's title, and so on. See the caveat below. |
+| `custom.related_variants` | Related Variants | List of product references | Overrides the **Product Recommendations** section on this product's page. When set, these products are shown instead of the collection chosen in the section settings. |
+
+Two corrections against the store, for anyone who read the earlier version of this page:
+
+- **`custom.product_deets` is plain multi-line text, not rich text.** Markup typed into it
+  is escaped, not rendered. Formatted copy needs the definition changed to rich text (and
+  the section's output filters reviewed) rather than HTML pasted into the field.
+- **`custom.product_info` is a list of *single line* text.** An accordion body cannot
+  contain line breaks as the field stands.
+
+### Defined on products but unused by the theme
+
+These definitions exist in the store and can be populated by merchants, but no Liquid,
+JSON snippet or script in `src/` reads them. Populating them has no storefront effect.
+
+| Identifier | Definition name | Type | Notes |
+|---|---|---|---|
+| `custom.vegan` | Vegan | Boolean | No consumer in the theme. A product badge or filter would have to be built. |
+| `reviews.rating` | Product rating | Rating | Shopify's standard review-aggregate field. The theme uses `custom.product_reviews` instead — see the duplication note below. |
+| `reviews.rating_count` | Product rating count | Number (integer) | Standard counterpart to `reviews.rating`; the theme uses `custom.review_count` instead. |
+| `shopify--discovery--product_search_boost.queries` | Search product boosts | List of single line text | Owned by Shopify Search & Discovery. |
+| `shopify--discovery--product_recommendation.related_products` | Related products | List of product references | Owned by Shopify Search & Discovery. Distinct from `custom.related_variants`, which is what this theme actually reads. |
+| `shopify--discovery--product_recommendation.related_products_display` | Related products settings | Single line text | Owned by Shopify Search & Discovery. |
+| `shopify--discovery--product_recommendation.complementary_products` | Complementary products | List of product references | Owned by Shopify Search & Discovery. |
+
+The `shopify--discovery--*` definitions are managed by the Search & Discovery app — don't
+edit them by hand.
+
+#### Ratings are defined twice
+
+The store has two parallel ratings models: Shopify's standard `reviews.rating` /
+`reviews.rating_count`, and this theme's `custom.product_reviews` /
+`custom.review_count`. **Only the `custom.*` pair renders.** A merchant filling in the
+"Product rating" fields — the ones most apps and Shopify's own UI write to — will see no
+stars on the storefront.
+
+Worth resolving one way or the other: either point the theme at `reviews.*` (the portable
+choice, and what review apps populate) or retire the `reviews.*` definitions so there's
+one obvious place to enter the data.
 
 ### Variant metafields
 
-| Identifier | Inferred type | Purpose |
-|---|---|---|
-| `global.variant_images` | List of file/image references | Extra images belonging to a specific variant. Used to swap the gallery when a variant is selected, and to pick the thumbnail for a cart line item. Note the legacy `global` namespace rather than `custom`. |
+| Identifier | Definition name | Type | Purpose |
+|---|---|---|---|
+| `global.variant_images` | Variant Images | List of file references | Extra images belonging to a specific variant. Used to swap the gallery when a variant is selected, and to pick the thumbnail for a cart line item. Note the legacy `global` namespace rather than `custom`. |
+
+This is the only product-variant definition in the store, and the theme's inferred type
+was correct.
 
 ### How `custom.product_info` is read
 

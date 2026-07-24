@@ -8,12 +8,10 @@ documented in full here and linked to from the other template pages.
 
 ## Metafield definitions
 
-**The theme reads no page metafields.** Searching `src/` for `page.metafields` returns no
-matches — page content comes from the page body, the section settings below, and the
+**The theme reads no page metafields, and the store defines none.** Searching `src/` for
+`page.metafields` returns no matches, and `metafieldDefinitions(ownerType: PAGE)` returns
+an empty list. Page content comes from the page body, the section settings below, and the
 navigation menu chosen in the section.
-
-Whether the store has page metafield definitions the theme doesn't consume is **not
-retrieved from store** (that requires Admin API access, which was unavailable).
 
 ## Template sections
 

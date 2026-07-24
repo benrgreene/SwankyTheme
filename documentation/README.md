@@ -14,7 +14,7 @@ It is written for two audiences at once:
 
 | Page | Covers |
 |------|--------|
-| [Metaobjects](metaobjects.md) | Metaobject definitions used by the theme |
+| [Metaobjects](metaobjects.md) | The store's three metaobject definitions — none currently read by the theme |
 | [Product template](templates/product.md) | Product metafields + product template sections |
 | [Collection template](templates/collection.md) | Collection metafields + collection template sections |
 | [Page template](templates/page.md) | Page metafields + page template sections |
@@ -89,17 +89,33 @@ only `cart-item`, `filter-list` and `product-tile` are registered.
 
 ## Where this data comes from
 
-Everything here was read from the theme source in `src/`. The connected Shopify store was
-**not** reachable when this documentation was generated — the repo ships only
-`config.sample.yml` (the real `config.yml` with the store domain and password is
-gitignored), and no Admin API credentials were available.
+Two sources, both read directly:
 
-That means:
+- **The theme source in `src/`** — section settings, block settings, template bindings and
+  metafield/metaobject **usage**.
+- **The connected store** (`ben-greenes-test-store.myshopify.com`) via the Admin API —
+  metafield and metaobject **definitions**: their display names, types, required flags and
+  descriptions as configured in Settings → Custom data.
 
-- Section settings, block settings, template bindings and metafield **usage** are complete
-  and accurate — they come from the theme files themselves.
-- Metafield and metaobject **definitions** (their display names, types, validations and
-  descriptions as configured in Settings → Custom data) could not be read. Where those
-  details are needed, the pages say **"not retrieved from store"** rather than guessing.
-  The types noted in these pages are *inferred from how the theme consumes the value* and
-  should be confirmed against the store before you rely on them.
+Definition names and types on these pages are therefore read from the store, not inferred.
+The one exception is `site_fields.enable_filtering`, which the theme reads but the store
+has no definition for — see
+[Collection metafields](templates/collection.md#metafield-definitions).
+
+Because both sides were read, these pages can also flag data that exists on **only** one
+side — definitions no merchant edit will ever surface on the storefront, such as the
+[unused metaobjects](metaobjects.md) and the
+[product definitions the theme ignores](templates/product.md#defined-on-products-but-unused-by-the-theme).
+
+### Refreshing the store side
+
+The definitions were fetched with the Shopify CLI:
+
+```bash
+shopify store auth --store ben-greenes-test-store.myshopify.com --scopes read_metaobject_definitions,read_products,read_content
+shopify store execute --store ben-greenes-test-store.myshopify.com --query '...'
+```
+
+This needs Shopify CLI 4.x (`store` commands don't exist in 3.x). Without an authenticated
+session the sync falls back to theme-only data and marks definition details
+**"not retrieved from store"** rather than guessing.

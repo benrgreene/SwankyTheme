@@ -8,13 +8,20 @@ collection template.
 
 ## Metafield definitions
 
-Definition names, validations and descriptions are **not retrieved from store**. The type
-below is inferred from how the theme consumes the value; confirm it in Settings → Custom
-data → Collections.
+**The store has no collection metafield definitions at all.** Querying
+`metafieldDefinitions(ownerType: COLLECTION)` returns an empty list.
+
+The theme nonetheless reads one collection metafield:
 
 | Identifier | Inferred type | Purpose |
 |---|---|---|
 | `site_fields.enable_filtering` | Boolean | Whether the filter sidebar is shown on this collection. **Defaults to on** — the theme applies `| default: true`, so a collection with the metafield unset gets filters. Set it to `false` to hide filtering for a specific collection. |
+
+Because there is no definition behind it, this field **cannot be edited in the Shopify
+admin**. Collection metafields only appear on the collection edit page once a definition
+exists; without one the value can only be set through the Admin API. The type above stays
+inferred from how the theme consumes the value — there is no store definition to confirm
+it against.
 
 Note the `site_fields` namespace here, which differs from the `custom` namespace used for
 product metafields.
