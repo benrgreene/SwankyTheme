@@ -46,16 +46,14 @@ const createWebCompClass = (idToPull, attributesToObserve = [], attributesToUpda
 	}
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-	customElements.define('cart-item', createWebCompClass('component-cart-item'));
-	customElements.define('filter-list', createWebCompClass('component-filter-list'));
+customElements.define('cart-item', createWebCompClass('component-cart-item'));
+customElements.define('filter-list', createWebCompClass('component-filter-list'));
 
-	customElements.define(
-		'product-tile', 
-		createWebCompClass(
-			'component-product-tile',
-			['title', 'price', 'href', 'image'],
-			['title', 'href', 'image']
-		)
-	);
-});
+customElements.define(
+	'product-tile', 
+	createWebCompClass(
+		'component-product-tile',
+		['title', 'price', 'href', 'image'],
+		['title', 'href', 'image']
+	)
+);

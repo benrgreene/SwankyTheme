@@ -1,0 +1,20 @@
+<div class="menu-parent-item" 
+     style="background-color: {{ block.settings.background }};">
+  I'm a parent menu item
+  {%- content_for 'blocks' -%}
+</div>
+
+
+{% schema %}
+{
+  "name": "Menu Parent Item",
+  "blocks": [{"type": "@theme"}],
+  "settings": [
+    {
+      "type": "color_background",
+      "id": "background",
+      "label": "Background color"
+    }
+  ]
+}
+{% endschema %}

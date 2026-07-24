@@ -11,7 +11,7 @@
     </template>
   </div>
   <div class="lg:hidden pb-3 flex gap-x-4 scrollbar">
-    <template x-for="(image, index) in $store.productInfo.variantImages">
+    <template x-for="(image, index) in $store.productInfo.variantImages" class="hidden">
       <button class="min-w-[4rem] h-[4rem]">
         <img :src="image.variant_image.replace('.jpg', '_250x.jpg').replace('.png', '_250x.png').replace('.webp', '_250x.webp')"
              :alt="image.image_alt_text"

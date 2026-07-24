@@ -46,7 +46,7 @@ const buildAssets = (cb) => {
  * ---------------------------------
  */
 const gulpLiquid = () => {
-  const directories = ['layout', 'snippets', 'sections', 'assets', 'config', 'locales'];
+  const directories = ['layout', 'templates', 'blocks', 'snippets', 'sections', 'assets', 'config', 'locales'];
   directories.forEach((directory) => {
     // Cannot flatten templates since customer account templates
     // need to be in the 'customers' directory

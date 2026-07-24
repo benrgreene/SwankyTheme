@@ -15,11 +15,14 @@
 
 <div class="hero-{{ section.id }} relative flex {{ vertical_position }} {{ horizontal_position }}">
 	<picture>
-		<source srcset="{{ section.settings.image | img_url: '1800x' }}"
+		<source data-hazy-srcset="{{ section.settings.image | img_url: '1800x' }}"
+            srcset="{{ section.settings.image | img_url: '450x' }}"
 						media="(min-width: 1024px)">
-		<source srcset="{{ section.settings.mobile_image | img_url: '1050x' }}"
+		<source data-hazy-srcset="{{ section.settings.mobile_image | img_url: '1050x' }}"
+            srcset="{{ section.settings.mobile_image | img_url: '350x' }}"
 						media="(min-width: 680px)">
-		<img src="{{ section.settings.mobile_image | img_url: '680x' }}" 
+		<img data-hazy-src="{{ section.settings.mobile_image | img_url: '680x' }}"
+         src="{{ section.settings.mobile_image | img_url: '280x' }}"
 				 alt="{{ section.settings.mobile_image.alt }}"
 				 class="absolute inset-0 block w-full h-full object-cover" />
 	</picture>

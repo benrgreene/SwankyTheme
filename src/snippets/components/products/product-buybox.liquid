@@ -10,7 +10,7 @@
       </div>
     {%- endunless -%}
 
-    <template x-if="productInfo.selectedVariant.price">
+    <template x-if="productInfo.selectedVariant.price" class="hidden">
       <div class="mt-6 flex items-center"
            x-data="{ price: `$${(productInfo.selectedVariant.price / 100.0).toFixed(2)}`, comparePrice: `$${(productInfo.selectedVariant.comparePrice / 100.0).toFixed(2)}`}">
         <p x-text="price"
@@ -26,7 +26,7 @@
       {{- product.description -}}
     </div>
 
-    <template x-for="optionGroup in productInfo.product.options">
+    <template x-for="optionGroup in productInfo.product.options" class="hidden">
       <div class="mb-6"
            x-show="optionGroup.name !== 'Title'">
         <p>
@@ -35,7 +35,7 @@
         </p>
         <div class="mt-4  gap-x-3 gap-y-4"
              :class="optionGroup.name === 'Color' ? 'flex items-center' : 'grid grid-cols-3'">
-          <template x-for="option in optionGroup.values">
+          <template x-for="option in optionGroup.values" class="hidden">
             <div>
               <button x-show="optionGroup.name !== 'Color'"
                       class="relative overflow-hidden border w-full border-big py-2 outline-offset-[3px]"

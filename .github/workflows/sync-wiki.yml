@@ -1,0 +1,66 @@
+name: Sync docs to wiki
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'documentation/**'
+      - '.github/workflows/sync-wiki.yml'
+permissions:
+  contents: write
+concurrency:
+  group: sync-wiki
+  cancel-in-progress: true
+jobs:
+  sync-wiki:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Mirror documentation to the wiki
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DOCS_DIR: documentation
+        run: |
+          set -euo pipefail
+
+          # Nothing to mirror yet: bail out BEFORE touching the wiki. Without this an empty or
+          # missing docs folder would either fail the job (find on a missing dir) or delete every
+          # existing wiki page and replace them with nothing.
+          if [ ! -d "$DOCS_DIR" ] || [ -z "$(find "$DOCS_DIR" -type f -name '*.md' -print -quit)" ]; then
+            echo "::notice::No Markdown files in '$DOCS_DIR' yet — nothing to sync. The wiki was left untouched."
+            exit 0
+          fi
+
+          wiki_url="https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.wiki.git"
+          wiki_dir="$(mktemp -d)"
+
+          # The wiki's git backend only exists once the wiki has at least one page.
+          if ! git clone "$wiki_url" "$wiki_dir"; then
+            echo "::error::Could not clone the wiki. Enable Wikis for this repo and create one initial page (e.g. Home) in the GitHub UI, then re-run."
+            exit 1
+          fi
+
+          # Mirror: drop existing top-level wiki markdown pages, then copy the docs in.
+          # Preserves the wiki's .git dir, non-markdown assets, and special
+          # navigation pages (_Sidebar.md, _Footer.md, _Header.md).
+          find "$wiki_dir" -maxdepth 1 -type f -name '*.md' -not -name '_*' -delete
+
+          # Copy every markdown file from the docs folder, flattening into the wiki root.
+          # README.md becomes Home.md (the wiki landing page).
+          while IFS= read -r -d '' f; do
+            base="$(basename "$f")"
+            [ "$base" = "README.md" ] && base="Home.md"
+            cp "$f" "$wiki_dir/$base"
+          done < <(find "$DOCS_DIR" -type f -name '*.md' -print0)
+
+          cd "$wiki_dir"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "Wiki already up to date."
+          else
+            git commit -m "Sync documentation to wiki (${GITHUB_SHA})"
+            git push
+          fi

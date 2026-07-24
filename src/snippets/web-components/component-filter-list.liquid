@@ -1,4 +1,4 @@
-<template id="component-filter-list">
+<template id="component-filter-list" class="hidden">
   <details class="border-0">
     <summary class="py-6 flex items-center justify-between cursor-pointer group">
       <p x-text="filter.label"
@@ -11,7 +11,7 @@
       </span>
     </summary>
     <div class="pb-6">
-      <template x-for="(filterValue, filterValIndex) in filter.values">
+      <template x-for="(filterValue, filterValIndex) in filter.values" class="hidden">
         <div class="py-1 flex items-center">
           <input type="checkbox"
                  :id="`${filter.filterOptionId}=${filterValue.value}`"

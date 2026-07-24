@@ -13,9 +13,7 @@
       }));
     }
 
-    const events = [
-      'shopify:section:select'
-    ];
+    const events = ['shopify:section:select'];
     events.forEach((shopifyEvent) => document.addEventListener(shopifyEvent, () => loadSections()));
   </script>
 {%- endif -%}

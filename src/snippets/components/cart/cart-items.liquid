@@ -1,7 +1,8 @@
 <div class="px-4 flex-grow scrollbar"
      :class="cart.updatingCart ? 'opacity-40 pointer-events-none touch-none' : ''">
   <template x-for="(item, index) in cart.cart.items"
-            :key="item.key">
+            :key="item.key"
+            class="hidden">
     <cart-item x-data="{ item: item, itemIndex: index }"></cart-item>
   </template>
 </div>

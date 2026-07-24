@@ -11,6 +11,7 @@ import { setupSnapSlider } from 'scripts/components/SnapSlider.js';
 import { setupAnimatedTiles } from 'scripts/components/AnimatedProducts.js';
 import { setupCartUpsells } from 'scripts/components/CartUpsells.js';
 import { setupQuizSection } from 'scripts/components/QuizSection.js';
+import { setupHazyImages } from 'scripts/components/HazyImageLoader.js';
 
 import 'scripts/components/Search.js';
 import 'scripts/components/InlineCart.js';
@@ -19,6 +20,7 @@ import 'scripts/utils/Images.js';
 import Timer from '@bva/countdown';
 
 document.addEventListener("DOMContentLoaded", () => {
+  setupHazyImages();
   setupObservers({});
   Timer.setup({});
   setupFormFields();
